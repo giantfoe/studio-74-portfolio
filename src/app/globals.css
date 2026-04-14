@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: var(--font-aeonik);
+  --font-body: var(--font-aeonik);
+  --font-label: var(--font-aeonik);
+
+  /* Light Editorial Cream Backgrounds */
+  --color-surface: #FDFBF7;
+  --color-surface-container-lowest: #FFFFFF;
+  --color-surface-container-low: #F6F3EC;
+  --color-surface-container-high: #EAE6DB;
+  --color-surface-container-highest: #DFDBCE;
+  
+  /* S74 Exact Logo Colors */
+  --color-primary: #f26622;
+  --color-primary-container: #f9e2cd;
+  --color-on-primary-container: #1A1A18;
+  
+  /* Typography */
+  --color-on-surface: #1A1A18;
+  --color-tertiary: #f26622;
+  --color-tertiary-container: #f9e2cd;
+  
+  --text-display-lg: 3.5rem;
+  --text-title-lg: 1.375rem;
+  --text-label-md: 0.75rem;
+}
+
+:root {
+  --background: var(--color-surface);
+  --foreground: var(--color-on-surface);
+  --outline-variant: #1A1A18;
+}
+
+.font-serif {
+  font-family: var(--font-serif), serif;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism */
+.glass-panel {
+  background-color: color-mix(in srgb, var(--color-surface) 60%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 15%, transparent);
+}
+
+.kinetic-overlay {
+  background-color: color-mix(in srgb, var(--color-tertiary-container) 60%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

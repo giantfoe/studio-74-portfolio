@@ -99,7 +99,7 @@ export default function Home() {
       
       {/* Persistent Brand Logo */}
       <div className="fixed top-6 left-6 md:top-10 md:left-12 z-50 pointer-events-none">
-        <img src="/logo.png" alt="Studio 74" className="h-4 md:h-8 w-auto opacity-100 select-none" />
+        <img src="/logo.png" alt="Studio 74" className="h-8 md:h-16 w-auto opacity-100 select-none" />
       </div>
 
       <div 

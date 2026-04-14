@@ -96,6 +96,12 @@ export default function Home() {
 
   return (
     <main className="w-full bg-[var(--color-surface)] text-[var(--color-on-surface)] transition-colors duration-200">
+      
+      {/* Persistent Brand Logo */}
+      <div className="fixed top-6 left-6 md:top-10 md:left-12 z-50 pointer-events-none">
+        <img src="/logo.png" alt="Studio 74" className="h-6 md:h-8 w-auto mix-blend-difference invert opacity-90 select-none" />
+      </div>
+
       <div 
         ref={containerRef} 
         className="min-h-screen md:h-screen w-full relative overflow-hidden"

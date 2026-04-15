@@ -27,9 +27,9 @@ export function Preloader() {
       initial={{ y: "0%" }}
       animate={{ y: "-100%" }}
       transition={{ delay: 2.8, duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
-      className="fixed inset-0 z-[100] bg-[var(--color-primary)] flex justify-center items-center pointer-events-none"
+      className="fixed inset-0 z-[100] bg-[var(--color-on-surface)] flex justify-center items-center pointer-events-none"
     >
-      <div className="font-display font-bold text-[var(--color-surface)] text-[30vw] md:text-[25vw] leading-none overflow-hidden h-fit px-8">
+      <div className="font-display font-bold text-[var(--color-primary)] text-[30vw] md:text-[25vw] leading-none overflow-hidden h-fit px-8">
         <motion.div
            initial={{ y: "110%" }}
            animate={{ y: "0%" }}

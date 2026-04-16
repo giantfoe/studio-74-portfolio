@@ -3,10 +3,13 @@
 import { motion } from 'framer-motion';
 
 const projects = [
-  { id: 1, title: "Al-ostoura", category: "Cinematic Commercial", format: "asymmetrical-large", thumbnail: "https://i.vimeocdn.com/video/2085922505-b8ec4238e823b83daf943e7e569e19dd7bf771d7e7aad1b5497ae4946c672440-d_1280x720", link: "https://vimeo.com/1139312850" },
-  { id: 2, title: "Bomba", category: "Visual Storytelling", format: "stacked", thumbnail: "https://i.vimeocdn.com/video/2085921943-faaede3fbc0a6a05c6ed687fa9adceee83c2a66138edd5e94524ad46950aea6e-d_1280x720", link: "https://vimeo.com/1139312846" },
-  { id: 3, title: "Vodka Mix", category: "Art Direction", format: "asymmetrical-small", thumbnail: "https://i.vimeocdn.com/video/2082185102-d02e5d96a6d2d231d0359fd921eb2e9ab38c50817f530b4686d6f24b7ad6a083-d_1280x720", link: "https://vimeo.com/1136483332" },
-  { id: 4, title: "Hosana", category: "Music Video", format: "large-centered", thumbnail: "https://i.vimeocdn.com/video/2017562806-4b25b8744825e44dc75b0ecb382a9bea224677a28b68103750fd236e14021831-d_1280x720", link: "https://vimeo.com/1085897549" }
+  { id: 1, title: "Films", category: "Short & Feature", format: "asymmetrical-large", thumbnail: "https://i.vimeocdn.com/video/2082185102-d02e5d96a6d2d231d0359fd921eb2e9ab38c50817f530b4686d6f24b7ad6a083-d_1280x720", link: "https://youtube.com/playlist?list=YOUR_PLAYLIST_ID_HERE" },
+  { id: 2, title: "Documentaries", category: "Featured Collection", format: "stacked", thumbnail: "https://i.vimeocdn.com/video/2085922505-b8ec4238e823b83daf943e7e569e19dd7bf771d7e7aad1b5497ae4946c672440-d_1280x720", link: "https://youtube.com/playlist?list=YOUR_PLAYLIST_ID_HERE" },
+  { id: 3, title: "Weddings", category: "Event Cinema", format: "asymmetrical-small", thumbnail: "https://i.vimeocdn.com/video/2085921943-faaede3fbc0a6a05c6ed687fa9adceee83c2a66138edd5e94524ad46950aea6e-d_1280x720", link: "https://youtube.com/playlist?list=YOUR_PLAYLIST_ID_HERE" },
+  { id: 4, title: "Visual Technical Consultancy", category: "Advisory", format: "asymmetrical-large", thumbnail: "https://i.vimeocdn.com/video/2082185102-d02e5d96a6d2d231d0359fd921eb2e9ab38c50817f530b4686d6f24b7ad6a083-d_1280x720", link: "https://youtube.com/playlist?list=YOUR_PLAYLIST_ID_HERE" },
+  { id: 5, title: "Events", category: "Live Coverage", format: "stacked", thumbnail: "https://i.vimeocdn.com/video/2017562806-4b25b8744825e44dc75b0ecb382a9bea224677a28b68103750fd236e14021831-d_1280x720", link: "https://youtube.com/playlist?list=YOUR_PLAYLIST_ID_HERE" },
+  { id: 6, title: "Live Recordings", category: "Multicam", format: "asymmetrical-small", thumbnail: "https://i.vimeocdn.com/video/2085922505-b8ec4238e823b83daf943e7e569e19dd7bf771d7e7aad1b5497ae4946c672440-d_1280x720", link: "https://youtube.com/playlist?list=YOUR_PLAYLIST_ID_HERE" },
+  { id: 7, title: "Podcasts", category: "Serial Content", format: "asymmetrical-large", thumbnail: "https://i.vimeocdn.com/video/2085921943-faaede3fbc0a6a05c6ed687fa9adceee83c2a66138edd5e94524ad46950aea6e-d_1280x720", link: "https://youtube.com/playlist?list=YOUR_PLAYLIST_ID_HERE" }
 ];
 
 export function PortfolioGrid() {
@@ -28,45 +31,48 @@ export function PortfolioGrid() {
 
       {/* The portfolio items flowing horizontally on MD, vertically on SM */}
       {projects.map((project, idx) => {
-        let heightClass = "h-[45vh] md:h-[65vh]";
-        let marginClass = "mt-0 md:mt-[5vh]";
+        let heightClass = "md:h-[65vh]";
+        let marginClass = "mt-12 md:mt-[5vh]";
         let titleSize = "text-[2rem] md:text-[4rem]";
         
         if (project.format === 'asymmetrical-large') {
-          heightClass = "h-[50vh] md:h-[80vh]";
-          marginClass = "mt-0 md:mt-[-5vh]";
+          heightClass = "md:h-[80vh]";
+          marginClass = "mt-12 md:mt-[-5vh]";
           titleSize = "text-[2.5rem] md:text-[5rem]";
         } else if (project.format === 'stacked') {
-          heightClass = "h-[40vh] md:h-[60vh]";
-          marginClass = "mt-0 md:mt-[20vh]";
+          heightClass = "md:h-[60vh]";
+          marginClass = "mt-12 md:mt-[20vh]";
         } else if (project.format === 'asymmetrical-small') {
-          heightClass = "h-[35vh] md:h-[50vh]";
-          marginClass = "mb-0 md:mb-[15vh]";
+          heightClass = "md:h-[50vh]";
+          marginClass = "mt-12 md:mb-[15vh]";
         }
 
         return (
-          <section key={project.id} className="h-auto md:h-screen shrink-0 flex items-center px-6 md:px-0 md:pr-32 py-12 md:py-0 w-full md:w-auto">
-            <a href={project.link} target="_blank" rel="noopener noreferrer" className={`block relative ${marginClass} ${heightClass} w-full md:w-auto md:aspect-video bg-[var(--color-surface)] overflow-hidden group cursor-explore`}>
-              {/* Image Layer */}
-              <img 
-                src={project.thumbnail} 
-                alt={project.title} 
-                className="w-full h-full object-cover grayscale opacity-[0.85] group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-[1.05] transition-transform duration-[1.5s] ease-[cubic-bezier(0.19,1,0.22,1)] select-none pointer-events-none" 
-              />
+          <section key={project.id} className="h-auto md:h-screen shrink-0 flex flex-col md:flex-row items-center px-6 md:px-0 md:pr-40 py-8 md:py-0 w-full md:w-auto overflow-hidden md:overflow-visible">
+            <a href={project.link} target="_blank" rel="noopener noreferrer" className={`block relative ${marginClass} w-full md:w-auto h-[60vh] md:aspect-video ${heightClass} group cursor-explore`}>
               
-              {/* Editorial Gradient Mask */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-1000 z-10" />
+              {/* Image Layer Container */}
+              <div className="absolute inset-0 w-full h-full bg-[var(--color-surface)] overflow-hidden">
+                <img 
+                  src={project.thumbnail} 
+                  alt={project.title} 
+                  className="portfolio-img absolute -inset-[5%] w-[110%] h-[110%] object-cover grayscale opacity-[0.8] group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 select-none pointer-events-none" 
+                />
+                
+                {/* Subtle Gradient Mask for Legibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-40 transition-opacity duration-1000 z-10" />
+              </div>
 
-              {/* Typography Layer */}
-              <div className="absolute bottom-[8%] left-[6%] md:left-[8%] z-20 flex flex-col justify-end">
+              {/* Typography Layer - Cleanly Inset on Mobile, Grid-Breaking on MD */}
+              <div className="absolute bottom-[6%] left-[6%] right-[6%] md:right-auto md:-bottom-[10%] md:-left-[15%] z-20 flex flex-col justify-end pointer-events-none">
                 <div className="flex items-center gap-4 mb-3">
-                   <span className="font-label text-[12px] tracking-[0.1em] text-[var(--color-primary)] font-bold">0{idx + 1}</span>
-                   <span className="w-8 md:w-12 h-[1px] bg-white/40 group-hover:bg-[var(--color-primary)] transition-colors duration-700" />
-                   <span className="font-label text-[10px] md:text-[12px] tracking-[0.1em] uppercase text-white/80">
+                   <span className="font-label text-[10px] md:text-[12px] tracking-[0.1em] text-[var(--color-primary)] font-bold transition-opacity duration-500 group-hover:opacity-80">0{idx + 1}</span>
+                   <span className="w-8 md:w-16 h-[1px] bg-white md:bg-[var(--color-on-surface)] transition-colors duration-700" />
+                   <span className="font-label text-[10px] md:text-[12px] tracking-[0.1em] uppercase text-[var(--color-primary)] font-bold">
                      {project.category}
                    </span>
                 </div>
-                <h3 className={`${titleSize} font-display font-bold leading-[0.9] tracking-[-0.02em] uppercase text-white group-hover:text-[var(--color-primary)] transition-colors duration-700`}>
+                <h3 className={`${project.title.length > 20 ? 'text-[1.5rem] md:text-[2.5rem]' : titleSize} font-display font-bold leading-[0.85] tracking-[-0.03em] uppercase text-white md:text-[var(--color-on-surface)] transition-colors duration-700`}>
                   {project.title}
                 </h3>
               </div>

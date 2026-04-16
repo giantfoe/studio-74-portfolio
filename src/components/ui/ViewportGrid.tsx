@@ -1,6 +1,6 @@
 export function ViewportGrid() {
   return (
-    <div className="fixed inset-0 pointer-events-none z-[60] p-6 md:p-12 font-label uppercase tracking-[0.1em] text-[10px] md:text-[12px] mix-blend-difference text-white">
+    <div className="fixed inset-0 pointer-events-none z-[60] p-6 md:p-12 font-label uppercase tracking-[0.1em] text-[10px] md:text-[12px] mix-blend-difference text-white hidden md:block">
       {/* Top Left - Replaced by Global Logo */}
       <div className="absolute top-8 left-6 md:top-12 md:left-12 pointer-events-auto">
         {/* Intentionally left blank for logo injection in page.tsx */}

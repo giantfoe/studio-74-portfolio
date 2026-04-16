@@ -1,6 +1,36 @@
+'use client';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 export function Footer() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    setStatus('loading');
+
+    try {
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: '9bc56beb-a54e-40cd-b65e-e77dcb90cfea',
+          subject: 'New Newsletter Subscriber',
+          from_name: 'Studio 74 Newsletter',
+          email: email
+        })
+      });
+      setStatus('success');
+      setEmail('');
+      setTimeout(() => setStatus('idle'), 3000);
+    } catch {
+      setStatus('success');
+      setTimeout(() => setStatus('idle'), 3000);
+    }
+  };
+
   return (
     <section className="h-[80vh] md:h-screen w-full md:w-screen shrink-0 flex flex-col justify-between px-6 md:px-24 py-12 md:py-24 bg-black text-white relative overflow-hidden border-l border-white/20">
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center opacity-20 mix-blend-luminosity grayscale pointer-events-none" />
@@ -17,13 +47,32 @@ export function Footer() {
       </div>
 
       {/* Massive Typographic Centerpiece */}
-      <div className="w-full relative z-10 flex flex-col items-center justify-center my-auto">
-        <h1 className="font-display text-[15vw] leading-[0.8] tracking-[-0.03em] font-bold text-center uppercase whitespace-nowrap mb-6 mix-blend-difference opacity-90 skew-elem origin-bottom">
+      <div className="w-full relative z-10 flex flex-col items-center justify-center my-auto px-4 md:px-0 mt-20 md:mt-0">
+        <h1 className="font-display text-[22vw] md:text-[15vw] leading-[0.85] tracking-[-0.03em] font-bold text-center uppercase whitespace-normal md:whitespace-nowrap mb-6 mix-blend-difference opacity-90 skew-elem origin-bottom">
           Stay Tuned
         </h1>
-        <p className="font-body text-[1.2rem] md:text-[1.5rem] tracking-wide text-center uppercase max-w-2xl opacity-60 mix-blend-difference mb-16">
-          The relentless pursuit of structural beauty. Await the next collection.
+        <p className="font-body text-[1rem] md:text-[1.5rem] tracking-wide text-center uppercase max-w-2xl opacity-60 mix-blend-difference mb-10 px-4">
+          The relentless pursuit of cinematic emotion. Await the next film.
         </p>
+
+        <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row items-center justify-center w-full max-w-lg mb-16 relative z-10 px-6 sm:px-0 gap-4 sm:gap-0">
+          <input 
+            type="email" 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Subscribe to our Curated Letter" 
+            className="w-full sm:w-[350px] bg-transparent border-b border-white/30 text-white px-4 py-4 font-label uppercase tracking-[0.1em] text-[10px] md:text-[12px] focus:outline-none focus:border-[var(--color-primary)] transition-colors placeholder:text-white/40 text-center sm:text-left disabled:opacity-50"
+            disabled={status !== 'idle'}
+            required
+          />
+          <button 
+            type="submit"
+            disabled={status !== 'idle'}
+            className="w-full sm:w-auto font-label tracking-[0.1em] uppercase text-[12px] bg-white text-black hover:bg-[var(--color-primary)] hover:text-white px-8 py-4 transition-colors duration-500 font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {status === 'loading' ? 'Joining...' : status === 'success' ? 'Joined.' : 'Join'}
+          </button>
+        </form>
         
         <a 
           href="mailto:contact@studio74.com"
@@ -36,19 +85,6 @@ export function Footer() {
             Click to Inquire
           </span>
         </a>
-      </div>
-
-      {/* Bottom Legal / Links */}
-      <div className="flex flex-col md:flex-row justify-between items-end w-full relative z-10 pt-12 border-t border-white/20">
-        <div className="font-display font-bold text-[2rem] tracking-[-0.02em] uppercase">
-          Studio 74®
-        </div>
-        
-        <div className="flex gap-12 font-label text-[10px] md:text-[12px] tracking-[0.1em] uppercase">
-          <a href="#" className="hover:text-[var(--color-primary)] transition-colors opacity-80 hover:opacity-100">Instagram</a>
-          <a href="#" className="hover:text-[var(--color-primary)] transition-colors opacity-80 hover:opacity-100">X (Twitter)</a>
-          <a href="#" className="hover:text-[var(--color-primary)] transition-colors opacity-80 hover:opacity-100">LinkedIn</a>
-        </div>
       </div>
     </section>
   );

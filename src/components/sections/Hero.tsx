@@ -5,6 +5,37 @@ import { motion } from 'framer-motion';
 export function Hero() {
   return (
     <section className="h-screen w-full md:w-screen shrink-0 flex flex-col justify-center px-6 md:px-24 relative overflow-hidden bg-[var(--color-surface)]">
+      {/* Architectural Drafting Grid */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 3, delay: 1 }}
+        className="absolute inset-0 z-0 pointer-events-none"
+      >
+        <motion.div 
+          animate={{ backgroundPosition: ["0px 0px", "64px 64px"] }}
+          transition={{ repeat: Infinity, ease: "linear", duration: 2 }}
+          className="absolute inset-0 opacity-[0.02]" 
+          style={{ 
+            backgroundImage: `linear-gradient(to right, var(--color-on-surface) 1px, transparent 1px), linear-gradient(to bottom, var(--color-on-surface) 1px, transparent 1px)`, 
+            backgroundSize: '1rem 1rem',
+            filter: 'blur(1px)' // Simulates out-of-focus motion blur at speed
+          }} 
+        />
+        <motion.div 
+          animate={{ backgroundPosition: ["0px 0px", "64px 64px"] }}
+          transition={{ repeat: Infinity, ease: "linear", duration: 2 }}
+          className="absolute inset-0 opacity-[0.05]" 
+          style={{ 
+            backgroundImage: `linear-gradient(to right, var(--color-on-surface) 1px, transparent 1px), linear-gradient(to bottom, var(--color-on-surface) 1px, transparent 1px)`, 
+            backgroundSize: '4rem 4rem',
+            filter: 'blur(1.5px)' // Heavier blur on the dominant grid structure
+          }} 
+        />
+        {/* Fade grid smoothly at the edges */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_var(--color-surface)_80%)] border-none" />
+      </motion.div>
+
       {/* Abstract Structural Background Graphic */}
       <div className="absolute inset-0 z-0 flex items-center justify-center mix-blend-difference opacity-50 pointer-events-none">
         <motion.span 
@@ -27,7 +58,7 @@ export function Hero() {
           }}
           className="font-display font-bold uppercase tracking-[-0.02em] leading-[0.8] mb-0 mix-blend-difference"
         >
-          <span className="block text-[15vw] md:text-[10vw] lg:text-[9rem] text-[var(--color-on-surface)] overflow-hidden py-2 whitespace-nowrap">
+          <span className="block text-[13vw] md:text-[10vw] lg:text-[9rem] text-[var(--color-on-surface)] overflow-hidden py-2 whitespace-nowrap">
             {"STUDIO".split("").map((char, index) => (
               <motion.span 
                 key={`s1-${index}`} 
@@ -41,7 +72,7 @@ export function Hero() {
               </motion.span>
             ))}
           </span>
-          <span className="block text-[15vw] md:text-[10vw] lg:text-[9rem] text-[var(--color-primary)] ml-[5%] md:ml-[10%] overflow-hidden py-2 whitespace-nowrap">
+          <span className="block text-[13vw] md:text-[10vw] lg:text-[9rem] text-[var(--color-primary)] ml-[5%] md:ml-[10%] overflow-hidden py-2 whitespace-nowrap">
             {"SEVENTY".split("").map((char, index) => (
               <motion.span 
                 key={`s2-${index}`} 
@@ -55,7 +86,7 @@ export function Hero() {
               </motion.span>
             ))}
           </span>
-          <span className="block text-[15vw] md:text-[10vw] lg:text-[9rem] text-[var(--color-primary)] ml-[10%] md:ml-[20%] overflow-hidden py-2 whitespace-nowrap">
+          <span className="block text-[13vw] md:text-[10vw] lg:text-[9rem] text-[var(--color-primary)] ml-[10%] md:ml-[20%] overflow-hidden py-2 whitespace-nowrap">
             {"FOUR".split("").map((char, index) => (
               <motion.span 
                 key={`s3-${index}`} 
@@ -80,7 +111,7 @@ export function Hero() {
         >
           <div className="kinetic-overlay p-8 md:p-12 border-none">
             <p className="font-body font-bold text-[var(--text-title-lg)] md:text-[1.5rem] leading-snug text-[var(--color-on-surface)] mix-blend-exclusion text-white">
-              Architecting uncompromising aesthetic systems. Cinematic precision engineered through kinetic digital architecture.
+              Raw cinema. Editorial stills. Unapologetic visual aesthetics executed with absolute precision.
             </p>
           </div>
         </motion.div>

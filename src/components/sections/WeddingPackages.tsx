@@ -7,7 +7,7 @@ const packages = [
     title: 'Lafidi', 
     category: 'Traditional',
     price: '$300',
-    image: 'https://images.unsplash.com/photo-1551963319-13ff32a5acd1?auto=format&fit=crop&q=80&w=1200',
+    image: '/images/weddings/lafidi.jpg', // Visual: Bride in green gele
     features: [
       'One Camera Setup', 
       'Main Ceremony', 
@@ -22,7 +22,7 @@ const packages = [
     title: 'Krain~Krain', 
     category: 'Traditional',
     price: '$450',
-    image: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=1200',
+    image: '/images/weddings/krain-krain.jpg', // Visual: Couple in red
     features: [
       'Two Camera Setup', 
       'Bridal Prep', 
@@ -39,7 +39,7 @@ const packages = [
     title: 'Flamingo', 
     category: 'White Wedding',
     price: '$1,500',
-    image: 'https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&q=80&w=1200',
+    image: '/images/weddings/flamingo.jpg', // Visual: Bride reading letter
     features: [
       'Two Camera Setup', 
       'Pre-Wedding Film', 
@@ -57,7 +57,7 @@ const packages = [
     title: 'Red Velvet', 
     category: 'White Wedding',
     price: '$2,000',
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=1200',
+    image: '/images/weddings/red-velvet.png', // Visual: Full bride portrait
     features: [
       'Three Camera Setup', 
       'Pre-Wedding Film / Doc', 
@@ -163,9 +163,6 @@ export function WeddingPackages({ onUnlock }: { onUnlock: () => void }) {
                <div className="flex gap-2 items-center">
                  <span className="font-label text-[10px] md:text-[12px] tracking-[0.1em] uppercase border border-[var(--color-primary)] text-[var(--color-primary)] px-4 md:px-6 py-2 backdrop-blur-sm">
                     {pkg.category}
-                 </span>
-                 <span className="font-label text-[10px] md:text-[12px] tracking-[0.1em] uppercase border border-white/30 text-white px-4 md:px-6 py-2 backdrop-blur-sm hidden lg:inline-block">
-                    Vol // 0{i + 1}
                  </span>
                </div>
                <div className="text-right text-white">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
@@ -10,10 +10,34 @@ import { Services } from "@/components/sections/Services";
 import { WeddingPackages } from "@/components/sections/WeddingPackages";
 import { NewsletterArchive } from "@/components/sections/NewsletterArchive";
 import { Footer } from "@/components/sections/Footer";
+import { PlaylistModal } from "@/components/ui/PlaylistModal";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollWrapperRef = useRef<HTMLDivElement>(null);
+  const lenisRef = useRef<Lenis | null>(null);
+
+  const [activePlaylist, setActivePlaylist] = useState<number | null>(null);
+
+  const handleOpenPlaylist = useCallback((id: number) => {
+    setActivePlaylist(id);
+    // Pause Lenis so background doesn't scroll
+    lenisRef.current?.stop();
+  }, []);
+
+  const handleClosePlaylist = useCallback(() => {
+    setActivePlaylist(null);
+    // Resume Lenis
+    lenisRef.current?.start();
+  }, []);
+
+  const handleScrollToTop = useCallback(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { duration: 1.2 });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -34,6 +58,9 @@ export default function Home() {
       lenis.on('scroll', ScrollTrigger.update);
       gsap.ticker.add((time) => lenis?.raf(time * 1000));
       gsap.ticker.lagSmoothing(0);
+
+      // Store ref so modal can pause/resume it
+      lenisRef.current = lenis;
     }
 
     const mm = gsap.matchMedia();
@@ -103,6 +130,7 @@ export default function Home() {
       mm.revert();
       ctx.revert();
       lenis?.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
@@ -110,9 +138,12 @@ export default function Home() {
     <main className="w-full bg-[var(--color-surface)] text-[var(--color-on-surface)] transition-colors duration-200">
       
       {/* Persistent Brand Logo */}
-      <div className="fixed top-6 left-6 md:top-10 md:left-12 z-50 pointer-events-none">
-        <img src="/logo.png" alt="Studio 74" className="h-8 md:h-16 w-auto opacity-100 select-none" />
-      </div>
+      <button 
+        onClick={handleScrollToTop}
+        className="fixed top-6 left-6 md:top-10 md:left-12 z-50 cursor-pointer hover:opacity-70 transition-opacity"
+      >
+        <img src="/logo.png" alt="Studio 74" className="h-8 md:h-16 w-auto select-none" />
+      </button>
 
       <div 
         ref={containerRef} 
@@ -140,7 +171,7 @@ export default function Home() {
         >
           <Hero />
           
-          <PortfolioGrid />
+          <PortfolioGrid onOpenPlaylist={handleOpenPlaylist} />
           
           <Services />
 
@@ -151,6 +182,13 @@ export default function Home() {
           <Footer />
         </div>
       </div>
+
+      {/* Playlist Modal — rendered OUTSIDE the GSAP container so fixed positioning works */}
+      <PlaylistModal 
+        isOpen={activePlaylist !== null} 
+        playlistId={activePlaylist}
+        onClose={handleClosePlaylist} 
+      />
     </main>
   );
 }

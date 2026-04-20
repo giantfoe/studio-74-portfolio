@@ -49,15 +49,15 @@ export function NewsletterReader({ letter, onClose }: NewsletterReaderProps) {
         
         {/* Sticky Header */}
         <div className="shrink-0 flex justify-between items-center p-6 md:px-12 md:py-8 border-b border-[var(--outline-variant)] bg-[var(--color-surface)]/80 backdrop-blur-md z-20 sticky top-0">
-          <div className="font-label text-[10px] tracking-[0.1em] uppercase text-[var(--color-primary)] border border-[var(--color-primary)] px-3 py-1">
-            {letter.volume}
-          </div>
           <button 
             onClick={onClose}
             className="text-[var(--color-on-surface)] opacity-50 hover:opacity-100 hover:text-[var(--color-primary)] font-label tracking-widest text-[12px] uppercase transition-colors"
           >
             [ Close Reader ]
           </button>
+          <div className="font-label text-[10px] tracking-[0.1em] uppercase text-[var(--color-primary)] border border-[var(--color-primary)] px-3 py-1">
+            {letter.volume}
+          </div>
         </div>
 
         {/* Scrollable Content */}

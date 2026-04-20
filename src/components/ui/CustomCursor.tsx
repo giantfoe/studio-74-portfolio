@@ -78,7 +78,7 @@ export function CustomCursor() {
       variants={variants}
       animate={cursorVariant}
       transition={{ type: 'spring', stiffness: 500, damping: 28, mass: 0.5 }}
-      className="fixed top-0 left-0 pointer-events-none z-[100] flex justify-center items-center text-[10px] font-bold tracking-widest uppercase overflow-hidden"
+      className="fixed top-0 left-0 pointer-events-none z-[100] hidden md:flex justify-center items-center text-[10px] font-bold tracking-widest uppercase overflow-hidden"
     >
       {cursorText && (
         <span className="opacity-100">{cursorText}</span>

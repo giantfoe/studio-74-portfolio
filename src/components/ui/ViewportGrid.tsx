@@ -8,7 +8,7 @@ export function ViewportGrid() {
       
       {/* Top Right */}
       <div className="absolute top-8 right-6 md:top-12 md:right-12 pointer-events-auto cursor-explore hover:opacity-50 transition-opacity">
-        [ MENU ]
+        [ RAW CINEMA ]
       </div>
       
       {/* Bottom Left */}

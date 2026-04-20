@@ -111,23 +111,14 @@ export function Hero() {
         >
           <div className="kinetic-overlay p-8 md:p-12 border-none">
             <p className="font-body font-bold text-[var(--text-title-lg)] md:text-[1.5rem] leading-snug text-[var(--color-on-surface)] mix-blend-exclusion text-white">
-              Raw cinema. Editorial stills. Unapologetic visual aesthetics executed with absolute precision.
+              We don’t just create moving JPEGS- we turn ideas into films that provide solutions to Media needs through clarity, craft , and execution  with excellence
             </p>
           </div>
         </motion.div>
 
       </div>
 
-      {/* Scroll indicator - micro typography strictly aligned */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 4.8, duration: 1 }}
-        className="absolute bottom-12 left-6 md:left-12 lg:left-24 flex flex-col gap-2 z-20 font-label tracking-[0.05em] uppercase text-[var(--text-label-md)] text-[var(--color-on-surface)]"
-      >
-        <span className="opacity-50">[ SCROLL TO EXPLORE ]</span>
-        <span className="w-[1px] h-12 bg-[var(--color-on-surface)] opacity-30 mt-2 block" />
-      </motion.div>
+
     </section>
   );
 }

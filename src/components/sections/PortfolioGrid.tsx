@@ -2,17 +2,73 @@
 
 import { motion } from 'framer-motion';
 
-const projects = [
-  { id: 1, title: "Films", category: "Short & Feature", format: "asymmetrical-large", thumbnail: "https://i.vimeocdn.com/video/2082185102-d02e5d96a6d2d231d0359fd921eb2e9ab38c50817f530b4686d6f24b7ad6a083-d_1280x720", link: "https://youtube.com/playlist?list=YOUR_PLAYLIST_ID_HERE" },
-  { id: 2, title: "Documentaries", category: "Featured Collection", format: "stacked", thumbnail: "https://i.vimeocdn.com/video/2085922505-b8ec4238e823b83daf943e7e569e19dd7bf771d7e7aad1b5497ae4946c672440-d_1280x720", link: "https://youtube.com/playlist?list=YOUR_PLAYLIST_ID_HERE" },
-  { id: 3, title: "Weddings", category: "Event Cinema", format: "asymmetrical-small", thumbnail: "https://i.vimeocdn.com/video/2085921943-faaede3fbc0a6a05c6ed687fa9adceee83c2a66138edd5e94524ad46950aea6e-d_1280x720", link: "https://youtube.com/playlist?list=YOUR_PLAYLIST_ID_HERE" },
-  { id: 4, title: "Visual Technical Consultancy", category: "Advisory", format: "asymmetrical-large", thumbnail: "https://i.vimeocdn.com/video/2082185102-d02e5d96a6d2d231d0359fd921eb2e9ab38c50817f530b4686d6f24b7ad6a083-d_1280x720", link: "https://youtube.com/playlist?list=YOUR_PLAYLIST_ID_HERE" },
-  { id: 5, title: "Events", category: "Live Coverage", format: "stacked", thumbnail: "https://i.vimeocdn.com/video/2017562806-4b25b8744825e44dc75b0ecb382a9bea224677a28b68103750fd236e14021831-d_1280x720", link: "https://youtube.com/playlist?list=YOUR_PLAYLIST_ID_HERE" },
-  { id: 6, title: "Live Recordings", category: "Multicam", format: "asymmetrical-small", thumbnail: "https://i.vimeocdn.com/video/2085922505-b8ec4238e823b83daf943e7e569e19dd7bf771d7e7aad1b5497ae4946c672440-d_1280x720", link: "https://youtube.com/playlist?list=YOUR_PLAYLIST_ID_HERE" },
-  { id: 7, title: "Podcasts", category: "Serial Content", format: "asymmetrical-large", thumbnail: "https://i.vimeocdn.com/video/2085921943-faaede3fbc0a6a05c6ed687fa9adceee83c2a66138edd5e94524ad46950aea6e-d_1280x720", link: "https://youtube.com/playlist?list=YOUR_PLAYLIST_ID_HERE" }
+export const projects = [
+  { 
+    id: 1, 
+    title: "Documentaries", 
+    category: "Featured Collection", 
+    format: "asymmetrical-large", 
+    thumbnail: "https://i.ytimg.com/vi/dyHZ3Cter8Y/maxresdefault.jpg",
+    platform: "youtube" as const,
+    playlistId: "PLpC8RXjP3Pddq9uX3owfxKqjxGVWrzk0V"
+  },
+  { 
+    id: 2, 
+    title: "Music Videos", 
+    category: "Visual Stories", 
+    format: "stacked", 
+    thumbnail: "https://i.ytimg.com/vi/RsIH-Ps2uKk/maxresdefault.jpg",
+    platform: "youtube" as const,
+    playlistId: "PLpC8RXjP3Pdc27WxnZlCxueWei9H_uGn3"
+  },
+  { 
+    id: 3, 
+    title: "Podcasts", 
+    category: "Serial Content", 
+    format: "asymmetrical-small", 
+    thumbnail: "https://i.ytimg.com/vi/U4FnEk0TrAM/maxresdefault.jpg",
+    platform: "youtube" as const,
+    playlistId: "PLpC8RXjP3PdfSoBTAKN1r9EwwDhYfJhpR"
+  },
+  { 
+    id: 4, 
+    title: "Live Recordings", 
+    category: "Multicam", 
+    format: "asymmetrical-large", 
+    thumbnail: "https://i.ytimg.com/vi/zHJW8ymonno/maxresdefault.jpg",
+    platform: "youtube" as const,
+    playlistId: "PLpC8RXjP3Pdf8AM5e0OpNwTLA256py6S1"
+  },
+  { 
+    id: 5, 
+    title: "TV Commercials", 
+    category: "Broadcast", 
+    format: "stacked", 
+    thumbnail: "https://vumbnail.com/1139312850.jpg",
+    platform: "vimeo-collection" as const,
+    playlistId: "1139312850,1139312846,1139312835,1136955573,1136483332"
+  },
+  { 
+    id: 6, 
+    title: "Films", 
+    category: "Short & Feature", 
+    format: "asymmetrical-small", 
+    thumbnail: "https://vumbnail.com/868560138.jpg",
+    platform: "vimeo-video" as const,
+    playlistId: "868560138"
+  },
+  { 
+    id: 7, 
+    title: "Weddings", 
+    category: "Event Cinema", 
+    format: "asymmetrical-large", 
+    thumbnail: "https://i.ytimg.com/vi/U4FnEk0TrAM/maxresdefault.jpg",
+    platform: "youtube" as const,
+    playlistId: null
+  }
 ];
 
-export function PortfolioGrid() {
+export function PortfolioGrid({ onOpenPlaylist }: { onOpenPlaylist: (id: number) => void }) {
   return (
     <>
       <section className="h-auto md:h-screen shrink-0 flex flex-col justify-center px-6 md:px-24 py-24 md:py-0 w-full md:w-[60vw]">
@@ -49,7 +105,7 @@ export function PortfolioGrid() {
 
         return (
           <section key={project.id} className="h-auto md:h-screen shrink-0 flex flex-col md:flex-row items-center px-6 md:px-0 md:pr-40 py-8 md:py-0 w-full md:w-auto overflow-hidden md:overflow-visible">
-            <a href={project.link} target="_blank" rel="noopener noreferrer" className={`block relative ${marginClass} w-full md:w-auto h-[60vh] md:aspect-video ${heightClass} group cursor-explore`}>
+            <button onClick={() => onOpenPlaylist(project.id)} className={`block text-left relative ${marginClass} w-full md:w-auto h-[60vh] md:aspect-video ${heightClass} group cursor-explore`}>
               
               {/* Image Layer Container */}
               <div className="absolute inset-0 w-full h-full bg-[var(--color-surface)] overflow-hidden">
@@ -76,7 +132,7 @@ export function PortfolioGrid() {
                   {project.title}
                 </h3>
               </div>
-            </a>
+            </button>
           </section>
         );
       })}

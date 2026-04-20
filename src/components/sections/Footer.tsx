@@ -75,7 +75,7 @@ export function Footer() {
         </form>
         
         <a 
-          href="mailto:contact@studio74.com"
+          href="mailto:slstudio74sl@gmail.com"
           className="group relative px-12 py-6 bg-white text-black hover:bg-[var(--color-primary)] hover:text-white transition-colors duration-500 overflow-hidden flex items-center justify-center cursor-pointer"
         >
           <span className="font-label text-[12px] tracking-[0.2em] uppercase relative z-10 font-bold block transition-transform duration-500 group-hover:-translate-y-[60px] whitespace-nowrap">

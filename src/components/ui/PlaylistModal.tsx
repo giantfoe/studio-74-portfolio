@@ -100,7 +100,7 @@ export function PlaylistModal({ isOpen, playlistId, onClose }: PlaylistModalProp
     }
   }, []);
 
-  const isVimeo = activeProject?.platform === 'vimeo';
+  const isVimeo = activeProject?.platform === 'vimeo-collection';
   const isVimeoVideo = activeProject?.platform === 'vimeo-video';
   const hasNoPlaylist = !activeProject?.playlistId;
 

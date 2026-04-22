@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
@@ -14,7 +15,8 @@ const MOCK_PLAYLIST_VIDEOS = [
   { id: "tAGnKpE4NCI", title: "Commercial Work - Nike", thumbnail: "https://images.unsplash.com/photo-1504215680853-026ed2a45def?q=80&w=1974&auto=format&fit=crop" },
 ];
 
-export default function PlaylistPage({ params }: { params: { id: string } }) {
+export default function PlaylistPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   // We use the first video as the featured video.
   const featuredVideo = MOCK_PLAYLIST_VIDEOS[0];
   const otherVideos = MOCK_PLAYLIST_VIDEOS.slice(1);

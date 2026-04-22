@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(
   request: Request,
-  { params }: { params: { ids: string } }
+  { params }: { params: Promise<{ ids: string }> }
 ) {
   const idsParam = (await params).ids;
   if (!idsParam) {

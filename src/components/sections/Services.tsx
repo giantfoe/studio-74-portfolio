@@ -1,38 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { CollaboratorShowcase } from '../ui/CollaboratorShowcase';
 import { BookingModal } from '../ui/BookingModal';
 
-const services = [
-  {
-    title: "Films",
-    desc: "Shorts and feature-length productions engineered with compelling narrative structures and rigorous cinematic technique."
-  },
-  {
-    title: "Documentaries",
-    desc: "Raw, prestige storytelling that captures reality through a bold, observational, and high-end editorial lens."
-  },
-  {
-    title: "Wedding Cinema",
-    desc: "Timeless, high-end documentary filmmaking that transforms your wedding day into a stunning cinematic masterpiece."
-  },
-  {
-    title: "Technical Consultancy",
-    desc: "High-level advisory and architectural planning for complex audio-visual setups and studio broadcast environments."
-  },
-  {
-    title: "Live Events",
-    desc: "Dynamic, scalable coverage packages designed to meticulously document corporate and high-profile social gatherings."
-  },
-  {
-    title: "Live Recordings",
-    desc: "Professional multi-cam setups engineered for concerts, live performances, and studio sessions with uncompromising fidelity."
-  },
-  {
-    title: "Original Podcasts",
-    desc: "Serial audio and visual content production crafted to elevate brand authority through engaging, high-retention formats."
-  }
+const partners = [
+  { name: "Africell", logo: "/africell.png" },
+  { name: "Al Jazeera", logo: "/aljazeera.jpg" },
+  { name: "DW", logo: "/DW.jpg" },
+  { name: "World Bank Group", logo: "/worldbank.jpg" },
+  { name: "United Bank for Africa", logo: "/UBA.jpg" },
+  { name: "UNICEF", logo: "/uniceflogo.png" },
+  { name: "UNOPS", logo: "/UNOPS.jpg" },
+  { name: "Guinness", logo: "/guinness.jpg" },
+  { name: "BBC Media Action", logo: "/bbc-media-action.jpg" },
 ];
 
 export function Services() {
@@ -44,13 +25,13 @@ export function Services() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-32 w-full">
           <div>
             <span className="font-label text-[var(--text-label-md)] tracking-[0.05em] uppercase text-[var(--color-primary)] mb-6 block">
-              [ Expertise ]
+              [ Selected Partners ]
             </span>
             <h2 className="font-display font-bold uppercase tracking-[-0.02em] text-[3.5rem] md:text-[5rem] leading-[0.9] text-[var(--color-on-surface)]">
-              Visual <br /> Narratives
+              Trusted <br /> Collaborators
             </h2>
             <p className="mt-8 font-body text-[1.1rem] leading-relaxed max-w-sm text-[var(--color-on-surface)] opacity-80">
-              We don't just record events. We document human emotion through high-end cinematic production and editorial storytelling.
+              We partner with visionary brands, agencies, and global networks to produce uncompromising cinematic narratives.
             </p>
           </div>
           <div className="mt-12 md:mt-0 flex flex-col md:justify-end md:items-end">
@@ -59,7 +40,7 @@ export function Services() {
                 [ Studio Access ]
               </span>
               <p className="font-body text-[1rem] leading-relaxed text-[var(--color-on-surface)] opacity-80 mb-6">
-                Secure your production dates or schedule an initial narrative consultation with our creative directors.
+                Join our roster of premium partners. Secure your production dates or schedule an initial consultation.
               </p>
               <button 
                 onClick={(e) => { e.preventDefault(); setIsBookingOpen(true); }}
@@ -72,29 +53,10 @@ export function Services() {
         </div>
       </section>
 
-      {/* Services tiles vertically scrolling on mobile, horizontally on md */}
-      {services.map((svc, i) => (
-        <section key={i} className="h-auto md:h-screen shrink-0 flex items-center pr-0 md:pr-24 relative z-10 hover:z-20 px-6 md:px-0 py-8 md:py-0 w-full md:w-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6 }}
-            className={`w-full md:w-[35vw] bg-transparent md:bg-[var(--color-surface-container-low)] p-6 md:p-16 transition-all duration-500 group md:skew-elem origin-bottom border-none ${i % 2 !== 0 ? 'md:-mt-[20vh] mt-0' : 'md:mt-[20vh] mt-0'}`}
-          >
-            <div className="font-label text-[10px] tracking-[0.05em] uppercase text-[var(--color-on-surface)] opacity-40 mb-6 font-bold flex items-center gap-4">
-              <span>0{i + 1}</span>
-              <span className="w-12 h-[1px] bg-[var(--color-on-surface)] opacity-20 block md:hidden" />
-            </div>
-            <h3 className="font-display font-bold text-[10vw] sm:text-[2.2rem] md:text-[3rem] uppercase tracking-[-0.02em] text-[var(--color-primary)] mb-6 leading-[0.9] break-keep">
-              {svc.title}
-            </h3>
-            <p className="font-body text-[1.125rem] md:text-lg text-[var(--color-on-surface)] opacity-70 leading-relaxed max-w-sm">
-              {svc.desc}
-            </p>
-          </motion.div>
-        </section>
-      ))}
+      {/* Collaborator Showcase — Two-column list with hover logo preview */}
+      <section className="h-auto md:h-screen shrink-0 w-full md:w-[70vw] relative bg-[var(--color-surface-container-high)] border-l border-[var(--outline-variant)]">
+        <CollaboratorShowcase collaborators={partners} />
+      </section>
 
       <BookingModal 
         isOpen={isBookingOpen} 

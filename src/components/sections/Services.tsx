@@ -5,7 +5,6 @@ import { CollaboratorShowcase } from '../ui/CollaboratorShowcase';
 import { BookingModal } from '../ui/BookingModal';
 
 const partners = [
-  { name: "Africell", logo: "/africell.png" },
   { name: "Al Jazeera", logo: "/aljazeera.jpg" },
   { name: "DW", logo: "/DW.jpg" },
   { name: "World Bank Group", logo: "/worldbank.jpg" },
@@ -25,10 +24,10 @@ export function Services() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-32 w-full">
           <div>
             <span className="font-label text-[var(--text-label-md)] tracking-[0.05em] uppercase text-[var(--color-primary)] mb-6 block">
-              [ Selected Partners ]
+              [ Work with Us ]
             </span>
             <h2 className="font-display font-bold uppercase tracking-[-0.02em] text-[3.5rem] md:text-[5rem] leading-[0.9] text-[var(--color-on-surface)]">
-              Trusted <br /> Collaborators
+              Book our <br /> studio space
             </h2>
             <p className="mt-8 font-body text-[1.1rem] leading-relaxed max-w-sm text-[var(--color-on-surface)] opacity-80">
               We partner with visionary brands, agencies, and global networks to produce uncompromising cinematic narratives.

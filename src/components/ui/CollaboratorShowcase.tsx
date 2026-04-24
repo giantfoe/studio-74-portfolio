@@ -199,7 +199,7 @@ export function CollaboratorShowcase({ collaborators }: CollaboratorShowcaseProp
             color: 'var(--color-primary)',
           }}
         >
-          [ Collaborators ]
+          [ Clients ]
         </span>
 
         {/* Two-Column List with Center Divider */}

@@ -97,6 +97,9 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   category: 'entertainment',
+  verification: {
+    google: 'pDjLHp8u2M2z0MMDfl0zo6VKxBx62-VYlfEY5FADq3Y',
+  },
 };
 
 // JSON-LD Structured Data

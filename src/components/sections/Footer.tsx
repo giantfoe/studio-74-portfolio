@@ -48,9 +48,9 @@ export function Footer() {
 
       {/* Massive Typographic Centerpiece */}
       <div className="w-full relative z-10 flex flex-col items-center justify-center my-auto px-4 md:px-0 mt-20 md:mt-0">
-        <h1 className="font-display text-[22vw] md:text-[15vw] leading-[0.85] tracking-[-0.03em] font-bold text-center uppercase whitespace-normal md:whitespace-nowrap mb-6 mix-blend-difference opacity-90 skew-elem origin-bottom">
+        <h2 className="font-display text-[22vw] md:text-[15vw] leading-[0.85] tracking-[-0.03em] font-bold text-center uppercase whitespace-normal md:whitespace-nowrap mb-6 mix-blend-difference opacity-90 skew-elem origin-bottom">
           Stay Tuned
-        </h1>
+        </h2>
         <p className="font-body text-[1rem] md:text-[1.5rem] tracking-wide text-center uppercase max-w-2xl opacity-60 mix-blend-difference mb-10 px-4">
           The relentless pursuit of cinematic emotion. Await the next film.
         </p>

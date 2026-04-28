@@ -115,7 +115,7 @@ export function JournalPage({ article }: JournalPageProps) {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute top-full right-0 mt-3 z-[70] bg-[var(--color-surface-container-low)] border border-[var(--outline-variant)]/20 p-6 shadow-2xl min-w-[280px]"
+                className="absolute top-full right-0 left-0 md:left-auto mt-3 z-[70] bg-[var(--color-surface-container-low)] border border-[var(--outline-variant)]/20 p-6 shadow-2xl md:min-w-[280px] max-h-[70vh] overflow-y-auto"
               >
                 <p className="font-label text-[10px] tracking-[0.15em] uppercase text-[var(--color-primary)] mb-4">
                   Share this article
@@ -124,7 +124,7 @@ export function JournalPage({ article }: JournalPageProps) {
                 {/* Copy Link */}
                 <button
                   onClick={handleCopy}
-                  className="w-full flex items-center justify-between py-3 px-4 mb-2 border border-[var(--outline-variant)]/10 hover:border-[var(--color-primary)] transition-all duration-300 cursor-pointer group"
+                  className="w-full flex items-center justify-between py-4 px-4 mb-2 border border-[var(--outline-variant)]/10 hover:border-[var(--color-primary)] transition-all duration-300 cursor-pointer group min-h-[44px]"
                 >
                   <span className="font-label text-[11px] tracking-[0.08em] uppercase opacity-70 group-hover:opacity-100">
                     {copied ? '✓ Copied!' : 'Copy Link'}
@@ -139,7 +139,7 @@ export function JournalPage({ article }: JournalPageProps) {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full flex items-center justify-between py-3 px-4 mb-2 border border-[var(--outline-variant)]/10 hover:border-[var(--color-primary)] transition-all duration-300 group block"
+                    className="w-full flex items-center justify-between py-4 px-4 mb-2 border border-[var(--outline-variant)]/10 hover:border-[var(--color-primary)] transition-all duration-300 group block min-h-[44px]"
                   >
                     <span className="font-label text-[11px] tracking-[0.08em] uppercase opacity-70 group-hover:opacity-100 capitalize">
                       {platform}
@@ -161,7 +161,7 @@ export function JournalPage({ article }: JournalPageProps) {
                   />
                   <button
                     onClick={handleDownloadQR}
-                    className="mt-3 font-label text-[10px] tracking-[0.1em] uppercase text-[var(--color-primary)] opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
+                    className="mt-3 font-label text-[11px] tracking-[0.1em] uppercase text-[var(--color-primary)] opacity-70 hover:opacity-100 active:opacity-100 transition-opacity cursor-pointer min-h-[44px] px-6 py-3 border border-[var(--color-primary)]/30 active:border-[var(--color-primary)]"
                   >
                     Download QR
                   </button>
@@ -301,10 +301,10 @@ export function JournalPage({ article }: JournalPageProps) {
                 </p>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 <button
                   onClick={handleCopy}
-                  className="font-label text-[10px] tracking-[0.12em] uppercase px-5 py-3 border border-[var(--outline-variant)]/20 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-all duration-300 cursor-pointer"
+                  className="font-label text-[10px] tracking-[0.12em] uppercase px-5 py-3 border border-[var(--outline-variant)]/20 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] active:border-[var(--color-primary)] active:text-[var(--color-primary)] transition-all duration-300 cursor-pointer min-h-[44px]"
                 >
                   {copied ? '✓ Copied' : 'Copy Link'}
                 </button>
@@ -317,7 +317,7 @@ export function JournalPage({ article }: JournalPageProps) {
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-label text-[10px] tracking-[0.12em] uppercase px-5 py-3 border border-[var(--outline-variant)]/20 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-all duration-300 capitalize"
+                      className="font-label text-[10px] tracking-[0.12em] uppercase px-5 py-3 border border-[var(--outline-variant)]/20 hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] active:border-[var(--color-primary)] active:text-[var(--color-primary)] transition-all duration-300 capitalize min-h-[44px]"
                     >
                       {platform}
                     </a>
@@ -336,7 +336,7 @@ export function JournalPage({ article }: JournalPageProps) {
               />
               <button
                 onClick={handleDownloadQR}
-                className="mt-4 font-label text-[10px] tracking-[0.12em] uppercase text-[var(--color-primary)] opacity-70 hover:opacity-100 transition-opacity cursor-pointer"
+                className="mt-4 font-label text-[11px] tracking-[0.12em] uppercase text-[var(--color-primary)] opacity-70 hover:opacity-100 active:opacity-100 transition-opacity cursor-pointer min-h-[44px] px-6 py-3 border border-[var(--color-primary)]/30 active:border-[var(--color-primary)]"
               >
                 [ Download QR Code ]
               </button>

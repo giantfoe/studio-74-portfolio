@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: 'https://studio74.film/sitemap.xml',
+    sitemap: 'https://studio74.one/sitemap.xml',
   };
 }

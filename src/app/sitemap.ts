@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { journalArticles } from '@/data/journal';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://studio74.film';
+  const baseUrl = 'https://studio74.one';
 
   const journalEntries: MetadataRoute.Sitemap = journalArticles.map((article) => ({
     url: `${baseUrl}/journal/${article.slug}`,

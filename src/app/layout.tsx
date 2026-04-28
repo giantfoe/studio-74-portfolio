@@ -31,7 +31,7 @@ const playfair = Playfair_Display({
   style: ['normal', 'italic'],
 });
 
-const SITE_URL = 'https://studio74.film';
+const SITE_URL = 'https://studio74.one';
 const SITE_NAME = 'Studio 74';
 const SITE_DESCRIPTION =
   'Studio 74 is a cinematic production house based in Freetown, Sierra Leone — specializing in TV commercials, wedding films, documentaries, and brand storytelling for clients including BBC, Al Jazeera, UNICEF, and the World Bank.';

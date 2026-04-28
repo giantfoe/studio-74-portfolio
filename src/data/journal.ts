@@ -15,7 +15,7 @@ export interface ArticleSection {
   items?: string[]; // for list type
 }
 
-export const SITE_URL = 'https://studio74.film';
+export const SITE_URL = 'https://studio74.one';
 
 export const journalArticles: JournalArticle[] = [
   {

@@ -161,6 +161,154 @@ export const journalArticles: JournalArticle[] = [
       },
     ],
   },
+  {
+    slug: 'half-full-half-empty-same-glass-different-production',
+    volume: 'Issue 002',
+    title: 'Half Full. Half Empty. Same Glass. Different Production.',
+    excerpt:
+      "In filmmaking, people often judge the final frame without understanding what it took to create it. Because in production, output is rarely accidental.",
+    date: '2026-05-13',
+    author: 'Caleb',
+    readTime: '3 min read',
+    sections: [
+      {
+        type: 'paragraph',
+        content:
+          "In filmmaking, people often judge the final frame without understanding what it took to create it.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "A client sends a reference.\nA beautiful commercial.\nClean lighting. Smooth movement. Perfect color. Strong performances.",
+      },
+      {
+        type: 'paragraph',
+        content: 'Then comes the question:',
+      },
+      {
+        type: 'quote',
+        content: '\u201cCan we do this?\u201d',
+      },
+      {
+        type: 'paragraph',
+        content: 'The answer is almost always:',
+      },
+      {
+        type: 'quote',
+        content: '\u201cYes. But under what conditions?\u201d',
+      },
+      {
+        type: 'paragraph',
+        content:
+          "Because in production, output is rarely accidental.\nEvery result is connected to the conditions that produced it.",
+      },
+      {
+        type: 'heading',
+        content: 'The Equation Behind Every Frame',
+      },
+      {
+        type: 'paragraph',
+        content:
+          'The quality of a film is not just a function of creativity. It is also a function of:',
+      },
+      {
+        type: 'list',
+        content: '',
+        items: [
+          'Time',
+          'Budget',
+          'Crew',
+          'Equipment',
+          'Planning',
+          'Communication',
+          'Energy',
+          'Environment',
+        ],
+      },
+      {
+        type: 'paragraph',
+        content:
+          "Two productions can aim for the same result and still arrive at completely different outcomes\u2014because the factors behind them were never the same.",
+      },
+      {
+        type: 'paragraph',
+        content: "That\u2019s the part most people don\u2019t see.",
+      },
+      {
+        type: 'heading',
+        content: 'References Are Not Guarantees',
+      },
+      {
+        type: 'paragraph',
+        content: 'In film, references are often treated like guarantees:',
+      },
+      {
+        type: 'quote',
+        content: '\u201cWe want something like this.\u201d',
+      },
+      {
+        type: 'paragraph',
+        content:
+          'But references are not just visual targets.\nThey are evidence of process.',
+      },
+      {
+        type: 'paragraph',
+        content: 'Behind every polished frame is structure:',
+      },
+      {
+        type: 'list',
+        content: '',
+        items: [
+          'Multiple lighting setups',
+          'Experienced crew',
+          'Production design',
+          'Time for revisions',
+          'Reliable power',
+          'Controlled environments',
+          'Pre-production planning',
+        ],
+      },
+      {
+        type: 'paragraph',
+        content: 'The final image is only the visible part of the work.',
+      },
+      {
+        type: 'heading',
+        content: 'The Glass',
+      },
+      {
+        type: 'paragraph',
+        content:
+          "So when expectations are high but the conditions are reduced, tension is created. The glass becomes \u201chalf empty\u201d\u2014not because the vision was impossible, but because the process required to achieve it was incomplete.",
+      },
+      {
+        type: 'paragraph',
+        content: 'And sometimes, the opposite happens.',
+      },
+      {
+        type: 'paragraph',
+        content:
+          "A limited production with the right planning, the right people, and the right understanding can still create something meaningful. The glass becomes \u201chalf full.\u201d",
+      },
+      {
+        type: 'paragraph',
+        content: 'Same industry. Same cameras. Different conditions.',
+      },
+      {
+        type: 'heading',
+        content: 'The Truth in Every Frame',
+      },
+      {
+        type: 'paragraph',
+        content:
+          'In filmmaking, the outcome is rarely disconnected from the process.',
+      },
+      {
+        type: 'paragraph',
+        content: 'Every frame carries the truth of how it was made.',
+      },
+    ],
+  },
 ];
 
 export function getArticleBySlug(slug: string): JournalArticle | undefined {

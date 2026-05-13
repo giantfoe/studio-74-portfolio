@@ -34,7 +34,7 @@ export function NewsletterArchive() {
             >
               <Link
                 href={`/journal/${article.slug}`}
-                className="group block w-full md:w-[350px] shrink-0 bg-[var(--color-surface-container-low)] border border-transparent hover:border-[var(--color-primary)] transition-all duration-500 overflow-hidden relative skew-elem origin-bottom px-8 py-10 flex flex-col justify-between h-[350px] md:h-[450px] text-left cursor-pointer"
+                className="group block w-full md:w-[350px] shrink-0 bg-[var(--color-surface-container-low)] border border-transparent hover:border-[var(--color-primary)] transition-all duration-500 overflow-hidden relative skew-elem origin-bottom px-8 py-10 flex flex-col justify-between min-h-[350px] md:min-h-[450px] text-left cursor-pointer"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                 

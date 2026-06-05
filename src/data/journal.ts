@@ -309,6 +309,115 @@ export const journalArticles: JournalArticle[] = [
       },
     ],
   },
+  {
+    slug: 'the-client-doesnt-inherit-your-problems',
+    volume: 'Issue 003',
+    title: "The Client Doesn't Inherit Your Problems.",
+    excerpt:
+      "One of the biggest lessons we've learned is that good production isn't just about creativity. It's about risk management.",
+    date: '2026-06-05',
+    author: 'Caleb',
+    readTime: '2 min read',
+    sections: [
+      {
+        type: 'paragraph',
+        content:
+          "There is a saying in production:\n\n\"The show must go on.\"\n\nSimple. Brutal. True.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "A few weeks ago, we were working on a production that involved multiple vendors, moving parts, and a custom set design. Part of that set required materials we had sourced from Nigeria.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "Everything was planned.\n\nEverything was ordered.\n\nEverything was expected to arrive before production.",
+      },
+      {
+        type: 'paragraph',
+        content: "It didn't.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "The shipment was delayed. By the time it arrived, production had already been completed. To make matters worse, some of the items arrived damaged and unusable.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "On paper, we had every reason to explain why things didn't go according to plan.\n\nBut there was one problem with that.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "The client didn't hire us to explain problems.\n\nThey hired us to deliver.",
+      },
+      {
+        type: 'paragraph',
+        content: "So we did.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "The production was completed. The deliverables were handed over. The project moved forward.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "Behind the scenes, however, the story was different.\n\nWe absorbed losses of nearly LE 20,000. Some vendors failed to meet expectations. Certain plans had to be abandoned and replaced in real time. Decisions had to be made quickly, often with incomplete information.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "None of that changed the outcome the client was expecting.\n\nAnd that's the point.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "One of the biggest lessons we've learned is that good production isn't just about creativity. It's about risk management.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "Every production carries uncertainty.\n\nEquipment can fail.\n\nShipments can be delayed.\n\nWeather can change.\n\nVendors can disappoint.\n\nPeople can make mistakes.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "The question isn't whether things will go wrong.\n\nThe question is:\n\n\"What happens when they do?\"",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "The strongest productions are not the ones where everything goes according to plan. They are the ones where the team has considered the risks, prepared for the possibilities, and found a way to deliver regardless.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "Because while the client should understand the challenges of production, they should never have to carry the burden of them.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "Those challenges belong to us.\n\nThat's the responsibility that comes with the work.",
+      },
+      {
+        type: 'paragraph',
+        content:
+          "At the end of the day, the audience only sees the final frame.\n\nThe client only sees the final delivery.\n\nAnd in our industry, that's exactly how it should be.",
+      },
+      {
+        type: 'paragraph',
+        content: "No excuses.\n\nJust delivery.",
+      },
+      {
+        type: 'quote',
+        content:
+          "Professionalism isn't measured by how things go when everything works. It's measured by what happens when everything doesn't.",
+      },
+    ],
+  },
 ];
 
 export function getArticleBySlug(slug: string): JournalArticle | undefined {

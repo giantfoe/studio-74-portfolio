@@ -15,7 +15,21 @@ export function JournalPage({ article }: JournalPageProps) {
   const [shareOpen, setShareOpen] = useState(false);
   const qrCanvasRef = useRef<HTMLCanvasElement>(null);
   const qrBottomRef = useRef<HTMLCanvasElement>(null);
+  const shareBtnRef = useRef<HTMLButtonElement>(null);
   const articleUrl = `${SITE_URL}/journal/${article.slug}`;
+
+  // Keyboard Escape listener to close share dropdown
+  useEffect(() => {
+    if (!shareOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShareOpen(false);
+        shareBtnRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [shareOpen]);
 
   // Generate QR codes on both canvases
   useEffect(() => {
@@ -103,8 +117,9 @@ export function JournalPage({ article }: JournalPageProps) {
             </Link>
 
             <button
+              ref={shareBtnRef}
               onClick={() => setShareOpen(!shareOpen)}
-              className="font-label text-[11px] tracking-[0.12em] uppercase text-[var(--color-on-surface)] opacity-50 hover:opacity-100 hover:text-[var(--color-primary)] transition-all duration-300 cursor-pointer border border-[var(--outline-variant)]/20 px-4 py-2 hover:border-[var(--color-primary)]"
+              className="font-label text-[11px] tracking-[0.12em] uppercase text-[var(--color-on-surface)] opacity-50 hover:opacity-100 hover:text-[var(--color-primary)] transition-all duration-300 cursor-pointer border border-[var(--outline-variant)]/20 px-4 py-2 hover:border-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-sm"
             >
               {shareOpen ? '✕ Close' : 'Share'}
             </button>
@@ -124,7 +139,7 @@ export function JournalPage({ article }: JournalPageProps) {
                 {/* Copy Link */}
                 <button
                   onClick={handleCopy}
-                  className="w-full flex items-center justify-between py-4 px-4 mb-2 border border-[var(--outline-variant)]/10 hover:border-[var(--color-primary)] transition-all duration-300 cursor-pointer group min-h-[44px]"
+                  className="w-full flex items-center justify-between py-4 px-4 mb-2 border border-[var(--outline-variant)]/10 hover:border-[var(--color-primary)] transition-all duration-300 cursor-pointer group min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-sm"
                 >
                   <span className="font-label text-[11px] tracking-[0.08em] uppercase opacity-70 group-hover:opacity-100">
                     {copied ? '✓ Copied!' : 'Copy Link'}
@@ -139,7 +154,7 @@ export function JournalPage({ article }: JournalPageProps) {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full flex items-center justify-between py-4 px-4 mb-2 border border-[var(--outline-variant)]/10 hover:border-[var(--color-primary)] transition-all duration-300 group block min-h-[44px]"
+                    className="w-full flex items-center justify-between py-4 px-4 mb-2 border border-[var(--outline-variant)]/10 hover:border-[var(--color-primary)] transition-all duration-300 group block min-h-[44px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-sm"
                   >
                     <span className="font-label text-[11px] tracking-[0.08em] uppercase opacity-70 group-hover:opacity-100 capitalize">
                       {platform}
@@ -158,10 +173,11 @@ export function JournalPage({ article }: JournalPageProps) {
                     width={160}
                     height={160}
                     className="bg-white p-2"
+                    aria-label="QR Code to read this article"
                   />
                   <button
                     onClick={handleDownloadQR}
-                    className="mt-3 font-label text-[11px] tracking-[0.1em] uppercase text-[var(--color-primary)] opacity-70 hover:opacity-100 active:opacity-100 transition-opacity cursor-pointer min-h-[44px] px-6 py-3 border border-[var(--color-primary)]/30 active:border-[var(--color-primary)]"
+                    className="mt-3 font-label text-[11px] tracking-[0.1em] uppercase text-[var(--color-primary)] opacity-70 hover:opacity-100 active:opacity-100 transition-opacity cursor-pointer min-h-[44px] px-6 py-3 border border-[var(--color-primary)]/30 active:border-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-sm"
                   >
                     Download QR
                   </button>
@@ -333,10 +349,11 @@ export function JournalPage({ article }: JournalPageProps) {
               <canvas
                 ref={qrBottomRef}
                 className="bg-white p-3 border border-[var(--outline-variant)]/10"
+                aria-label="QR Code to share this article"
               />
               <button
                 onClick={handleDownloadQR}
-                className="mt-4 font-label text-[11px] tracking-[0.12em] uppercase text-[var(--color-primary)] opacity-70 hover:opacity-100 active:opacity-100 transition-opacity cursor-pointer min-h-[44px] px-6 py-3 border border-[var(--color-primary)]/30 active:border-[var(--color-primary)]"
+                className="mt-4 font-label text-[11px] tracking-[0.12em] uppercase text-[var(--color-primary)] opacity-70 hover:opacity-100 active:opacity-100 transition-opacity cursor-pointer min-h-[44px] px-6 py-3 border border-[var(--color-primary)]/30 active:border-[var(--color-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-sm"
               >
                 [ Download QR Code ]
               </button>

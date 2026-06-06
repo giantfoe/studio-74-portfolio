@@ -129,6 +129,7 @@ export function CollaboratorShowcase({ collaborators }: CollaboratorShowcaseProp
   const renderRow = (collab: Collaborator, globalIndex: number) => (
     <div
       key={collab.name}
+      role="listitem"
       className="group cursor-default"
       onMouseEnter={() => handleMouseEnter(globalIndex)}
       onMouseLeave={handleMouseLeave}
@@ -205,7 +206,7 @@ export function CollaboratorShowcase({ collaborators }: CollaboratorShowcaseProp
         {/* Two-Column List with Center Divider */}
         <div className="flex flex-col md:flex-row w-full gap-0">
           {/* Left Column */}
-          <div className="flex-1">
+          <div className="flex-1" role="list" aria-label="Collaborators column 1">
             <div
               className="w-full h-[1px]"
               style={{ backgroundColor: 'var(--color-on-surface)', opacity: 0.15 }}
@@ -220,7 +221,7 @@ export function CollaboratorShowcase({ collaborators }: CollaboratorShowcaseProp
           />
 
           {/* Right Column */}
-          <div className="flex-1">
+          <div className="flex-1" role="list" aria-label="Collaborators column 2">
             <div
               className="w-full h-[1px]"
               style={{ backgroundColor: 'var(--color-on-surface)', opacity: 0.15 }}

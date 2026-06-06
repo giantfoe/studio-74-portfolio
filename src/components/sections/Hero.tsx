@@ -57,8 +57,9 @@ export function Hero() {
             visible: { opacity: 1, transition: { staggerChildren: 0.05, delayChildren: 3.2 } }
           }}
           className="font-display font-bold uppercase tracking-[-0.02em] leading-[0.8] mb-0 mix-blend-difference"
+          aria-label="STUDIO SEVENTY FOUR"
         >
-          <span className="block text-[13vw] md:text-[10vw] lg:text-[9rem] text-[var(--color-on-surface)] overflow-hidden py-2 whitespace-nowrap">
+          <span className="block text-[13vw] md:text-[10vw] lg:text-[9rem] text-[var(--color-on-surface)] overflow-hidden py-2 whitespace-nowrap" aria-hidden="true">
             {"STUDIO".split("").map((char, index) => (
               <motion.span 
                 key={`s1-${index}`} 
@@ -72,7 +73,7 @@ export function Hero() {
               </motion.span>
             ))}
           </span>
-          <span className="block text-[13vw] md:text-[10vw] lg:text-[9rem] text-[var(--color-primary)] ml-[5%] md:ml-[10%] overflow-hidden py-2 whitespace-nowrap">
+          <span className="block text-[13vw] md:text-[10vw] lg:text-[9rem] text-[var(--color-primary)] ml-[5%] md:ml-[10%] overflow-hidden py-2 whitespace-nowrap" aria-hidden="true">
             {"SEVENTY".split("").map((char, index) => (
               <motion.span 
                 key={`s2-${index}`} 
@@ -86,7 +87,7 @@ export function Hero() {
               </motion.span>
             ))}
           </span>
-          <span className="block text-[13vw] md:text-[10vw] lg:text-[9rem] text-[var(--color-primary)] ml-[10%] md:ml-[20%] overflow-hidden py-2 whitespace-nowrap">
+          <span className="block text-[13vw] md:text-[10vw] lg:text-[9rem] text-[var(--color-primary)] ml-[10%] md:ml-[20%] overflow-hidden py-2 whitespace-nowrap" aria-hidden="true">
             {"FOUR".split("").map((char, index) => (
               <motion.span 
                 key={`s3-${index}`} 

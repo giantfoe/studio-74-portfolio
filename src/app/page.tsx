@@ -4,13 +4,15 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
+import dynamic from 'next/dynamic';
 import { Hero } from "@/components/sections/Hero";
 import { PortfolioGrid } from "@/components/sections/PortfolioGrid";
 import { Services } from "@/components/sections/Services";
-import { WeddingPackages } from "@/components/sections/WeddingPackages";
-import { NewsletterArchive } from "@/components/sections/NewsletterArchive";
-import { Footer } from "@/components/sections/Footer";
-import { PlaylistModal } from "@/components/ui/PlaylistModal";
+
+const WeddingPackages = dynamic(() => import("@/components/sections/WeddingPackages").then((mod) => mod.WeddingPackages));
+const NewsletterArchive = dynamic(() => import("@/components/sections/NewsletterArchive").then((mod) => mod.NewsletterArchive));
+const Footer = dynamic(() => import("@/components/sections/Footer").then((mod) => mod.Footer));
+const PlaylistModal = dynamic(() => import("@/components/ui/PlaylistModal").then((mod) => mod.PlaylistModal), { ssr: false });
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,10 +28,17 @@ export default function Home() {
   }, []);
 
   const handleClosePlaylist = useCallback(() => {
+    const triggerId = activePlaylist !== null ? `project-trigger-${activePlaylist}` : null;
     setActivePlaylist(null);
     // Resume Lenis
     lenisRef.current?.start();
-  }, []);
+    if (triggerId) {
+      setTimeout(() => {
+        const trigger = document.getElementById(triggerId);
+        trigger?.focus();
+      }, 50);
+    }
+  }, [activePlaylist]);
 
   const handleScrollToTop = useCallback(() => {
     if (lenisRef.current) {
@@ -41,7 +50,7 @@ export default function Home() {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-
+    
     let lenis: Lenis | null = null;
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
 
@@ -140,7 +149,8 @@ export default function Home() {
       {/* Persistent Brand Logo */}
       <button 
         onClick={handleScrollToTop}
-        className="fixed top-6 left-6 md:top-10 md:left-12 z-50 cursor-pointer hover:opacity-70 transition-opacity"
+        aria-label="Studio 74 - scroll to top"
+        className="fixed top-6 left-6 md:top-10 md:left-12 z-50 cursor-pointer hover:opacity-70 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-sm"
       >
         <img src="/logo.png" alt="Studio 74" className="h-8 md:h-16 w-auto select-none" />
       </button>

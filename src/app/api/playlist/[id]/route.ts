@@ -55,7 +55,14 @@ export async function GET(
       }
     }
 
-    return NextResponse.json({ videos, count: videos.length });
+    return NextResponse.json(
+      { videos, count: videos.length },
+      {
+        headers: {
+          'Cache-Control': 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=600',
+        },
+      }
+    );
   } catch (error) {
     console.error('Playlist fetch error:', error);
     return NextResponse.json({ videos: [], error: String(error) }, { status: 500 });

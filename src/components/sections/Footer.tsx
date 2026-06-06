@@ -33,7 +33,7 @@ export function Footer() {
 
   return (
     <section className="h-[80vh] md:h-screen w-full md:w-screen shrink-0 flex flex-col justify-between px-6 md:px-24 py-12 md:py-24 bg-black text-white relative overflow-hidden border-l border-white/20">
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=2000')] bg-cover bg-center opacity-20 mix-blend-luminosity grayscale pointer-events-none" />
+      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=60&w=800')] bg-cover bg-center opacity-20 mix-blend-luminosity grayscale pointer-events-none" />
       
       {/* Top Meta Info */}
       <div className="flex justify-between items-start w-full relative z-10">
@@ -61,14 +61,15 @@ export function Footer() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Subscribe to our Curated Letter" 
-            className="w-full sm:w-[350px] bg-transparent border-b border-white/30 text-white px-4 py-4 font-label uppercase tracking-[0.1em] text-[10px] md:text-[12px] focus:outline-none focus:border-[var(--color-primary)] transition-colors placeholder:text-white/40 text-center sm:text-left disabled:opacity-50"
+            aria-label="Subscribe to our Curated Letter"
+            className="w-full sm:w-[350px] bg-transparent border-b border-white/30 text-white px-4 py-4 font-label uppercase tracking-[0.1em] text-[10px] md:text-[12px] focus:outline-none focus:border-[var(--color-primary)] focus-visible:outline-none focus-visible:border-[var(--color-primary)] transition-colors placeholder:text-white/40 text-center sm:text-left disabled:opacity-50"
             disabled={status !== 'idle'}
             required
           />
           <button 
             type="submit"
             disabled={status !== 'idle'}
-            className="w-full sm:w-auto font-label tracking-[0.1em] uppercase text-[12px] bg-white text-black hover:bg-[var(--color-primary)] hover:text-white px-8 py-4 transition-colors duration-500 font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full sm:w-auto font-label tracking-[0.1em] uppercase text-[12px] bg-white text-black hover:bg-[var(--color-primary)] hover:text-white px-8 py-4 transition-colors duration-500 font-bold disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-sm"
           >
             {status === 'loading' ? 'Joining...' : status === 'success' ? 'Joined.' : 'Join'}
           </button>
@@ -76,7 +77,8 @@ export function Footer() {
         
         <a 
           href="mailto:slstudio74sl@gmail.com"
-          className="group relative px-12 py-6 bg-white text-black hover:bg-[var(--color-primary)] hover:text-white transition-colors duration-500 overflow-hidden flex items-center justify-center cursor-pointer"
+          aria-label="Start a project by emailing Studio 74"
+          className="group relative px-12 py-6 bg-white text-black hover:bg-[var(--color-primary)] hover:text-white transition-colors duration-500 overflow-hidden flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
         >
           <span className="font-label text-[12px] tracking-[0.2em] uppercase relative z-10 font-bold block transition-transform duration-500 group-hover:-translate-y-[60px] whitespace-nowrap">
             Start A Project

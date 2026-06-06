@@ -48,7 +48,14 @@ export async function GET(
       if (res) videos.push(res);
     }
 
-    return NextResponse.json({ videos, count: videos.length });
+    return NextResponse.json(
+      { videos, count: videos.length },
+      {
+        headers: {
+          'Cache-Control': 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=600',
+        },
+      }
+    );
   } catch (error) {
     console.error('Vimeo fetch error:', error);
     return NextResponse.json({ videos: [], error: String(error) }, { status: 500 });

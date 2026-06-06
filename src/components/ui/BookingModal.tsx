@@ -8,8 +8,11 @@ interface BookingModalProps {
   onClose: () => void;
 }
 
+import { useRef } from 'react';
+
 export function BookingModal({ isOpen, onClose }: BookingModalProps) {
   const [step, setStep] = useState(0);
+  const modalRef = useRef<HTMLDivElement>(null);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -26,6 +29,63 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Focus trap and keyboard handlers
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const timer = setTimeout(() => {
+      const modalElement = modalRef.current;
+      if (!modalElement) return;
+
+      const focusableSelectors = 'button, [href], input, select, textarea, [tabindex="0"]';
+      const focusableElements = modalElement.querySelectorAll(focusableSelectors);
+      if (focusableElements.length > 0) {
+        // Focus the input if available, otherwise the close button
+        const input = modalElement.querySelector('input, textarea') as HTMLElement;
+        if (input) {
+          input.focus();
+        } else {
+          (focusableElements[0] as HTMLElement).focus();
+        }
+      }
+    }, 100);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const modalElement = modalRef.current;
+      if (!modalElement) return;
+
+      const focusableSelectors = 'button, [href], input, select, textarea, [tabindex="0"]';
+      const elements = modalElement.querySelectorAll(focusableSelectors);
+      if (elements.length === 0) return;
+
+      const first = elements[0] as HTMLElement;
+      const last = elements[elements.length - 1] as HTMLElement;
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          last.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === last) {
+          first.focus();
+          e.preventDefault();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose, step]);
 
   // Web3Forms Access Key - Get this for FREE at https://web3forms.com/
   // It takes 5 seconds. Just enter the client's email, and they email you the key.
@@ -128,10 +188,17 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
   const currentQ = questions[step];
 
   const modalContent = (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 text-white p-6 w-screen h-screen">
+    <div 
+      ref={modalRef}
+      role="dialog" 
+      aria-modal="true" 
+      aria-labelledby="booking-modal-title"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 text-white p-6 w-screen h-screen"
+    >
       <button 
         onClick={onClose}
-        className="absolute top-8 right-8 text-white/50 hover:text-white font-label tracking-widest text-[12px] uppercase transition-colors"
+        aria-label="Close booking modal"
+        className="absolute top-8 right-8 text-white/50 hover:text-white font-label tracking-widest text-[12px] uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-sm p-1"
       >
         [ Close ]
       </button>
@@ -151,7 +218,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                 {step + 1} / {questions.length}
               </div>
               
-              <h2 className="font-display text-3xl md:text-5xl font-bold leading-tight mb-12">
+              <h2 id="booking-modal-title" className="font-display text-3xl md:text-5xl font-bold leading-tight mb-12">
                 {currentQ.question}
               </h2>
 
@@ -159,6 +226,9 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                 {currentQ.type === 'textarea' ? (
                   <textarea 
                     autoFocus
+                    id={currentQ.id}
+                    name={currentQ.id}
+                    aria-labelledby="booking-modal-title"
                     className="w-full bg-transparent border-b-2 border-white/20 focus:border-white outline-none text-2xl pb-4 font-body transition-colors"
                     placeholder={currentQ.placeholder}
                     rows={4}
@@ -168,6 +238,9 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                 ) : (
                   <input 
                     autoFocus
+                    id={currentQ.id}
+                    name={currentQ.id}
+                    aria-labelledby="booking-modal-title"
                     type={currentQ.type}
                     className={`w-full bg-transparent border-b-2 border-white/20 focus:border-white outline-none text-3xl md:text-5xl pb-4 font-body transition-colors placeholder:text-white/20 ${currentQ.type === 'date' ? '[color-scheme:dark] uppercase text-white/90' : ''}`}
                     placeholder={currentQ.placeholder}
@@ -181,7 +254,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                      <button 
                        type="submit" 
                        disabled={isSubmitting}
-                       className="px-10 py-5 bg-[var(--color-primary)] text-white font-label tracking-[0.1em] uppercase text-[14px] hover:bg-white hover:text-black transition-colors duration-500 font-bold flex items-center gap-3 disabled:opacity-50"
+                       className="px-10 py-5 bg-[var(--color-primary)] text-white font-label tracking-[0.1em] uppercase text-[14px] hover:bg-white hover:text-black transition-colors duration-500 font-bold flex items-center gap-3 disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-sm"
                      >
                        {isSubmitting ? 'Submitting...' : 'Submit Request'}
                      </button>
@@ -189,9 +262,9 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                     <button 
                       type="button" 
                       onClick={handleNext}
-                      className="px-10 py-5 bg-white text-black font-label tracking-[0.1em] uppercase text-[14px] hover:bg-[var(--color-primary)] hover:text-white transition-colors duration-500 font-bold flex items-center gap-3"
+                      className="px-10 py-5 bg-white text-black font-label tracking-[0.1em] uppercase text-[14px] hover:bg-[var(--color-primary)] hover:text-white transition-colors duration-500 font-bold flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-sm"
                     >
-                      Next <span className="text-[1.2em]">→</span>
+                      Next <span className="text-[1.2em]" aria-hidden="true">→</span>
                     </button>
                   )}
 
@@ -199,7 +272,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                     <button 
                       type="button" 
                       onClick={handlePrev}
-                      className="text-white/40 hover:text-white font-label uppercase tracking-widest text-[12px] transition-colors"
+                      className="text-white/40 hover:text-white font-label uppercase tracking-widest text-[12px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white p-1 rounded-sm"
                     >
                       Press to go back
                     </button>

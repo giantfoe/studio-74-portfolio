@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export const projects = [
   { 
@@ -109,10 +110,12 @@ export function PortfolioGrid({ onOpenPlaylist }: { onOpenPlaylist: (id: number)
               
               {/* Image Layer Container */}
               <div className="absolute inset-0 w-full h-full bg-[var(--color-surface)] overflow-hidden">
-                <img 
+                <Image 
                   src={project.thumbnail} 
                   alt={project.title} 
-                  className="portfolio-img absolute -inset-[5%] w-[110%] h-[110%] object-cover grayscale opacity-[0.8] group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 select-none pointer-events-none" 
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="portfolio-img absolute -inset-[5%] !w-[110%] !h-[110%] !max-w-none object-cover grayscale opacity-[0.8] group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 select-none pointer-events-none" 
                 />
                 
                 {/* Subtle Gradient Mask for Legibility */}

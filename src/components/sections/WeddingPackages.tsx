@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 const packages = [
   { 
@@ -103,7 +104,14 @@ export function WeddingPackages({ onUnlock }: { onUnlock: () => void }) {
       <section className="w-full md:w-screen min-h-[500px] py-32 md:py-0 md:h-screen shrink-0 flex flex-col justify-center items-center px-6 md:px-24 bg-[var(--color-surface)] border-l border-[var(--outline-variant)] relative overflow-hidden">
         {/* Abstract floral background teaser */}
         <div className="absolute inset-0 z-0 select-none pointer-events-none">
-          <img src="https://images.unsplash.com/photo-1465495976222-438e8f8cb20c?auto=format&fit=crop&q=80&w=2000" className="w-full h-full object-cover grayscale opacity-20" />
+          <Image 
+            src="https://images.unsplash.com/photo-1465495976222-438e8f8cb20c?auto=format&fit=crop&q=60&w=800" 
+            alt="Wedding Teaser Background"
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover grayscale opacity-20"
+          />
           <div className="absolute inset-0 backdrop-blur-3xl bg-[var(--color-surface)]/70" />
         </div>
 
@@ -111,21 +119,23 @@ export function WeddingPackages({ onUnlock }: { onUnlock: () => void }) {
           <div className="font-label text-[var(--text-label-md)] tracking-[0.05em] uppercase opacity-50 mb-6 block">
             [ Premium Services ]
           </div>
-          <h2 className="font-display font-bold uppercase tracking-[-0.02em] text-[2.5rem] md:text-[4.5rem] leading-[0.9] mb-12">
+          <h2 id="wedding-private-access-title" className="font-display font-bold uppercase tracking-[-0.02em] text-[2.5rem] md:text-[4.5rem] leading-[0.9] mb-12">
             Wedding <br /> Private Access
           </h2>
           <form onSubmit={handleUnlock} className="flex flex-col gap-6 relative z-10 w-full cursor-explore">
             <input 
               type="password"
+              id="wedding-private-access-input"
+              aria-labelledby="wedding-private-access-title"
               placeholder="ENTER SECURE KEY"
               data-lenis-prevent="true"
-              className={`w-full bg-transparent border-b-2 ${error ? 'border-red-500 text-red-500' : 'border-black/20 text-black'} py-4 text-center font-label tracking-[0.1em] md:tracking-[0.2em] uppercase focus:outline-none focus:border-black transition-colors placeholder:text-black/30`}
+              className={`w-full bg-transparent border-b-2 ${error ? 'border-red-500 text-red-500' : 'border-black/20 text-black'} py-4 text-center font-label tracking-[0.1em] md:tracking-[0.2em] uppercase focus:outline-none focus:border-black focus-visible:outline-none focus-visible:border-black transition-colors placeholder:text-black/30`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <button 
               type="submit"
-              className="mt-8 px-8 py-4 bg-black text-white font-label uppercase tracking-[0.1em] md:tracking-[0.2em] hover:bg-[var(--color-primary)] transition-colors duration-500"
+              className="mt-8 px-8 py-4 bg-black text-white font-label uppercase tracking-[0.1em] md:tracking-[0.2em] hover:bg-[var(--color-primary)] transition-colors duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
             >
               UNLOCK SECRETS
             </button>
@@ -153,9 +163,12 @@ export function WeddingPackages({ onUnlock }: { onUnlock: () => void }) {
            <div className={`relative w-full md:w-[45vw] h-[70vh] md:h-[80vh] border border-[var(--outline-variant)] bg-black p-6 md:p-12 flex flex-col justify-between group cursor-explore mt-0 ${i % 2 === 0 ? 'md:mt-[10vh]' : 'md:mt-[-10vh]'}`}>
              
              {/* Object/Abstract Imagery layer */}
-             <img 
+             <Image 
                src={pkg.image} 
-               className="absolute inset-0 w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 transition-all duration-[1.5s] ease-[cubic-bezier(0.19,1,0.22,1)] md:group-hover:scale-105 group-hover:opacity-80 pointer-events-none"
+               alt={pkg.title}
+               fill
+               sizes="(max-width: 768px) 100vw, 45vw"
+               className="object-cover grayscale opacity-60 group-hover:grayscale-0 transition-all duration-[1.5s] ease-[cubic-bezier(0.19,1,0.22,1)] md:group-hover:scale-105 group-hover:opacity-80 pointer-events-none"
              />
              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/60 pointer-events-none" />
 

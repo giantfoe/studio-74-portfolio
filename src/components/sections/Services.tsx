@@ -42,8 +42,11 @@ export function Services() {
                 Join our roster of premium partners. Secure your production dates or schedule an initial consultation.
               </p>
               <button 
+                id="booking-trigger-btn"
                 onClick={(e) => { e.preventDefault(); setIsBookingOpen(true); }}
-                className="inline-block font-label tracking-[0.1em] font-bold uppercase text-[12px] bg-black text-white px-10 py-5 hover:bg-[var(--color-primary)] transition-colors duration-500"
+                aria-haspopup="dialog"
+                aria-expanded={isBookingOpen}
+                className="inline-block font-label tracking-[0.1em] font-bold uppercase text-[12px] bg-black text-white px-10 py-5 hover:bg-[var(--color-primary)] transition-colors duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-sm"
               >
                 Book The Studio
               </button>
@@ -59,7 +62,12 @@ export function Services() {
 
       <BookingModal 
         isOpen={isBookingOpen} 
-        onClose={() => setIsBookingOpen(false)} 
+        onClose={() => {
+          setIsBookingOpen(false);
+          setTimeout(() => {
+            document.getElementById('booking-trigger-btn')?.focus();
+          }, 50);
+        }} 
       />
     </>
   );

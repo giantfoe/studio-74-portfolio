@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ExternalLink, Play } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useRef, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { projects } from "@/components/sections/PortfolioGrid";
@@ -21,6 +22,7 @@ interface PlaylistModalProps {
 
 export function PlaylistModal({ isOpen, playlistId, onClose }: PlaylistModalProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
   const [videos, setVideos] = useState<VideoItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [activeVideoId, setActiveVideoId] = useState<string | null>(null);
@@ -82,14 +84,56 @@ export function PlaylistModal({ isOpen, playlistId, onClose }: PlaylistModalProp
     }
   }, [isOpen, playlistId]);
 
-  // Close on Escape key
+  // Focus trap and initial focus management
   useEffect(() => {
     if (!isOpen) return;
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+
+    const timer = setTimeout(() => {
+      const modalElement = modalRef.current;
+      if (!modalElement) return;
+
+      const focusableSelectors = 'button, [href], input, select, textarea, [tabindex="0"], iframe';
+      const focusableElements = modalElement.querySelectorAll(focusableSelectors);
+      
+      if (focusableElements.length > 0) {
+        (focusableElements[0] as HTMLElement).focus();
+      }
+    }, 100);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const modalElement = modalRef.current;
+      if (!modalElement) return;
+
+      const focusableSelectors = 'button, [href], input, select, textarea, [tabindex="0"], iframe';
+      const elements = modalElement.querySelectorAll(focusableSelectors);
+      if (elements.length === 0) return;
+
+      const first = elements[0] as HTMLElement;
+      const last = elements[elements.length - 1] as HTMLElement;
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          last.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === last) {
+          first.focus();
+          e.preventDefault();
+        }
+      }
     };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [isOpen, onClose]);
 
   const handleVideoSelect = useCallback((videoId: string) => {
@@ -108,7 +152,11 @@ export function PlaylistModal({ isOpen, playlistId, onClose }: PlaylistModalProp
     <AnimatePresence>
       {isOpen && activeProject && (
         <motion.div
+          ref={modalRef}
           key="playlist-modal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="playlist-modal-title"
           initial={{ opacity: 0, y: "100%" }}
           animate={{ opacity: 1, y: "0%" }}
           exit={{ opacity: 0, y: "100%" }}
@@ -127,7 +175,7 @@ export function PlaylistModal({ isOpen, playlistId, onClose }: PlaylistModalProp
             <div className="sticky top-0 left-0 w-full p-6 md:p-12 z-50 flex justify-between items-center bg-gradient-to-b from-[var(--color-surface)] via-[var(--color-surface)]/80 to-transparent">
               <button
                 onClick={onClose}
-                className="flex items-center gap-4 hover:opacity-70 transition-opacity font-label uppercase tracking-[0.1em] text-[12px] cursor-pointer text-[var(--color-on-surface)]"
+                className="flex items-center gap-4 hover:opacity-70 transition-opacity font-label uppercase tracking-[0.1em] text-[12px] cursor-pointer text-[var(--color-on-surface)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-sm p-1"
               >
                 <ArrowLeft size={16} />
                 <span>Back to Portfolio</span>
@@ -151,7 +199,7 @@ export function PlaylistModal({ isOpen, playlistId, onClose }: PlaylistModalProp
                     {activeProject.platform === 'youtube' ? 'YouTube Playlist' : activeProject.platform === 'vimeo-video' ? 'Vimeo Video' : 'Vimeo Collection'}
                   </span>
                 </div>
-                <h1 className="font-display text-[3rem] md:text-[6rem] font-bold leading-[0.85] tracking-[-0.02em] uppercase">
+                <h1 id="playlist-modal-title" className="font-display text-[3rem] md:text-[6rem] font-bold leading-[0.85] tracking-[-0.02em] uppercase">
                   {activeProject.title}
                 </h1>
               </div>
@@ -218,14 +266,16 @@ export function PlaylistModal({ isOpen, playlistId, onClose }: PlaylistModalProp
                             <button
                               key={video.videoId}
                               onClick={() => handleVideoSelect(video.videoId)}
-                              className={`group text-left cursor-pointer transition-all duration-500 ${isActive ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}
+                              className={`group text-left cursor-pointer transition-all duration-500 ${isActive ? 'opacity-100' : 'opacity-70 hover:opacity-100'} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] rounded-sm p-1`}
                             >
                               {/* Thumbnail */}
                               <div className={`relative aspect-video overflow-hidden bg-black/20 mb-4 rounded-sm ${isActive ? 'ring-2 ring-[var(--color-primary)]' : ''}`}>
-                                <img
+                                <Image
                                   src={video.thumbnail}
                                   alt={video.title}
-                                  className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${isActive ? '' : 'grayscale group-hover:grayscale-0'}`}
+                                  fill
+                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                  className={`absolute object-cover transition-all duration-700 ${isActive ? '' : 'grayscale group-hover:grayscale-0'}`}
                                 />
                                 <div className={`absolute inset-0 bg-gradient-to-t from-black/60 to-transparent transition-opacity duration-500 ${isActive ? 'opacity-40' : 'opacity-70 group-hover:opacity-40'}`} />
                                 
@@ -274,10 +324,12 @@ export function PlaylistModal({ isOpen, playlistId, onClose }: PlaylistModalProp
               {isVimeo && activeProject.playlistId && (
                 <section className="w-full">
                   <div className="relative w-full aspect-video bg-black/30 overflow-hidden rounded-sm group">
-                    <img 
+                    <Image 
                       src={activeProject.thumbnail}
                       alt={activeProject.title}
-                      className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
+                      fill
+                      sizes="(max-width: 1200px) 100vw, 1200px"
+                      className="absolute object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                     
@@ -322,10 +374,12 @@ export function PlaylistModal({ isOpen, playlistId, onClose }: PlaylistModalProp
               {hasNoPlaylist && (
                 <section className="w-full">
                   <div className="relative w-full aspect-video bg-black/10 overflow-hidden rounded-sm flex items-center justify-center">
-                    <img 
+                    <Image 
                       src={activeProject.thumbnail}
                       alt={activeProject.title}
-                      className="absolute inset-0 w-full h-full object-cover opacity-20 grayscale"
+                      fill
+                      sizes="(max-width: 1200px) 100vw, 1200px"
+                      className="absolute object-cover opacity-20 grayscale"
                     />
                     <div className="absolute inset-0 bg-[var(--color-surface)]/80" />
                     <div className="relative z-10 text-center">

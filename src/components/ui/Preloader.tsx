@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 export function Preloader() {
   const [counter, setCounter] = useState(0);
+  const [isRemoved, setIsRemoved] = useState(false);
 
   useEffect(() => {
     // 2.5 second duration to hit 74 rapid-fire
@@ -22,12 +23,18 @@ export function Preloader() {
     return () => clearInterval(timer);
   }, []);
 
+  if (isRemoved) return null;
+
   return (
     <motion.div 
       initial={{ y: "0%" }}
       animate={{ y: "-100%" }}
       transition={{ delay: 2.8, duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
+      onAnimationComplete={() => setIsRemoved(true)}
       className="fixed inset-0 z-[100] bg-[var(--color-on-surface)] flex justify-center items-center pointer-events-none"
+      role="status"
+      aria-live="polite"
+      aria-label="Website loading"
     >
       <div className="font-display font-bold text-[var(--color-primary)] text-[30vw] md:text-[25vw] leading-none overflow-hidden h-fit px-8">
         <motion.div

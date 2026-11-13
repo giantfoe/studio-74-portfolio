@@ -105,11 +105,10 @@ export function WeddingPackages({ onUnlock }: { onUnlock: () => void }) {
         {/* Abstract floral background teaser */}
         <div className="absolute inset-0 z-0 select-none pointer-events-none">
           <Image 
-            src="https://images.unsplash.com/photo-1465495976222-438e8f8cb20c?auto=format&fit=crop&q=60&w=800" 
-            alt="Wedding Teaser Background"
+            src="/images/weddings/flamingo.jpg"
+            alt=""
             fill
             sizes="100vw"
-            priority
             className="object-cover grayscale opacity-20"
           />
           <div className="absolute inset-0 backdrop-blur-3xl bg-[var(--color-surface)]/70" />

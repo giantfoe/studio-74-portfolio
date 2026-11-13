@@ -1,23 +1,15 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
 import { journalArticles } from '@/data/journal';
+import { projectSlugs } from '@/data/projects';
+import { SITE_URL } from '@/data/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://studio74.one';
-
-  const journalEntries: MetadataRoute.Sitemap = journalArticles.map((article) => ({
-    url: `${baseUrl}/journal/${article.slug}`,
-    lastModified: new Date(article.date),
-    changeFrequency: 'monthly',
-    priority: 0.8,
-  }));
-
   return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-    ...journalEntries,
+    { url: `${SITE_URL}/` },
+    ...projectSlugs.map((slug) => ({ url: `${SITE_URL}/playlist/${slug}` })),
+    ...journalArticles.map((article) => ({
+      url: `${SITE_URL}/journal/${article.slug}`,
+      lastModified: article.date,
+    })),
   ];
 }

@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import QRCode from 'qrcode';
-import { JournalArticle, SITE_URL } from '@/data/journal';
+import type { JournalArticle } from '@/data/journal';
+import { SITE_URL } from '@/data/site';
 
 interface JournalPageProps {
   article: JournalArticle;
@@ -194,10 +195,7 @@ export function JournalPage({ article }: JournalPageProps) {
             />
           )}
           {/* Article Header */}
-          <motion.header
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
+          <header
           >
             {/* Volume Badge */}
             <div className="flex items-center gap-4 mb-8">
@@ -225,13 +223,10 @@ export function JournalPage({ article }: JournalPageProps) {
 
             {/* Divider */}
             <div className="w-24 h-[2px] bg-[var(--color-primary)] mb-16" />
-          </motion.header>
+          </header>
 
           {/* Article Body */}
-          <motion.article
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.3 }}
+          <article
             className="flex flex-col gap-8"
           >
             {article.sections.map((section, i) => {
@@ -298,7 +293,7 @@ export function JournalPage({ article }: JournalPageProps) {
                 Frames & Truth — Where story meets intention.
               </p>
             </div>
-          </motion.article>
+          </article>
 
           {/* Bottom Share Bar */}
           <motion.div

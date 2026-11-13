@@ -1,78 +1,13 @@
 'use client';
 
-import { motion } from 'framer-motion';
 import Image from 'next/image';
-
-export const projects = [
-  { 
-    id: 1, 
-    title: "Documentaries", 
-    category: "Featured Collection", 
-    format: "asymmetrical-large", 
-    thumbnail: "https://i.ytimg.com/vi/dyHZ3Cter8Y/maxresdefault.jpg",
-    platform: "youtube" as const,
-    playlistId: "PLpC8RXjP3Pddq9uX3owfxKqjxGVWrzk0V"
-  },
-  { 
-    id: 2, 
-    title: "Music Videos", 
-    category: "Visual Stories", 
-    format: "stacked", 
-    thumbnail: "https://i.ytimg.com/vi/RsIH-Ps2uKk/maxresdefault.jpg",
-    platform: "youtube" as const,
-    playlistId: "PLpC8RXjP3Pdc27WxnZlCxueWei9H_uGn3"
-  },
-  { 
-    id: 3, 
-    title: "Podcasts", 
-    category: "Serial Content", 
-    format: "asymmetrical-small", 
-    thumbnail: "https://i.ytimg.com/vi/U4FnEk0TrAM/maxresdefault.jpg",
-    platform: "youtube" as const,
-    playlistId: "PLpC8RXjP3PdfSoBTAKN1r9EwwDhYfJhpR"
-  },
-  { 
-    id: 4, 
-    title: "Live Recordings", 
-    category: "Multicam", 
-    format: "asymmetrical-large", 
-    thumbnail: "https://i.ytimg.com/vi/zHJW8ymonno/maxresdefault.jpg",
-    platform: "youtube" as const,
-    playlistId: "PLpC8RXjP3Pdf8AM5e0OpNwTLA256py6S1"
-  },
-  { 
-    id: 5, 
-    title: "TV Commercials", 
-    category: "Broadcast", 
-    format: "stacked", 
-    thumbnail: "https://vumbnail.com/1139312850.jpg",
-    platform: "vimeo-collection" as const,
-    playlistId: "1139312850,1139312846,1139312835,1136955573,1136483332"
-  },
-  { 
-    id: 6, 
-    title: "Films", 
-    category: "Short & Feature", 
-    format: "asymmetrical-small", 
-    thumbnail: "https://vumbnail.com/868560138.jpg",
-    platform: "vimeo-video" as const,
-    playlistId: "868560138"
-  },
-  { 
-    id: 7, 
-    title: "Weddings", 
-    category: "Event Cinema", 
-    format: "asymmetrical-large", 
-    thumbnail: "https://i.ytimg.com/vi/U4FnEk0TrAM/maxresdefault.jpg",
-    platform: "youtube" as const,
-    playlistId: null
-  }
-];
+import Link from 'next/link';
+import { projects } from '@/data/projects';
 
 export function PortfolioGrid({ onOpenPlaylist }: { onOpenPlaylist: (id: number) => void }) {
   return (
     <>
-      <section className="h-auto md:h-screen shrink-0 flex flex-col justify-center px-6 md:px-24 py-24 md:py-0 w-full md:w-[60vw]">
+      <section id="work" className="h-auto md:h-screen shrink-0 flex flex-col justify-center px-6 md:px-24 py-24 md:py-0 w-full md:w-[60vw]">
         <div className="max-w-2xl">
           <span className="font-label text-[var(--text-label-md)] tracking-[0.05em] uppercase text-[var(--color-primary)] mb-6 block">
             [ Selected Work ]
@@ -106,13 +41,22 @@ export function PortfolioGrid({ onOpenPlaylist }: { onOpenPlaylist: (id: number)
 
         return (
           <section key={project.id} className="h-auto md:h-screen shrink-0 flex flex-col md:flex-row items-center px-6 md:px-0 md:pr-40 py-8 md:py-0 w-full md:w-auto overflow-hidden md:overflow-visible">
-            <button onClick={() => onOpenPlaylist(project.id)} className={`block text-left relative ${marginClass} w-full md:w-auto h-[60vh] md:aspect-video ${heightClass} group cursor-explore`}>
+            <Link
+              id={`project-trigger-${project.id}`}
+              href={`/playlist/${project.slug}`}
+              prefetch={false}
+              aria-haspopup={project.playlistId ? 'dialog' : undefined}
+              onNavigate={project.playlistId ? (event) => {
+                event.preventDefault();
+                onOpenPlaylist(project.id);
+              } : undefined}
+              className={`block text-left relative ${marginClass} w-full md:w-auto h-[60vh] md:aspect-video ${heightClass} group cursor-explore focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-primary)]`}>
               
               {/* Image Layer Container */}
               <div className="absolute inset-0 w-full h-full bg-[var(--color-surface)] overflow-hidden">
                 <Image 
                   src={project.thumbnail} 
-                  alt={project.title} 
+                  alt=""
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="portfolio-img absolute -inset-[5%] !w-[110%] !h-[110%] !max-w-none object-cover grayscale opacity-[0.8] group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 select-none pointer-events-none" 
@@ -135,7 +79,7 @@ export function PortfolioGrid({ onOpenPlaylist }: { onOpenPlaylist: (id: number)
                   {project.title}
                 </h3>
               </div>
-            </button>
+            </Link>
           </section>
         );
       })}

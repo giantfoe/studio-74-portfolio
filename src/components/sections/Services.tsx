@@ -30,7 +30,7 @@ export function Services() {
               Book our <br /> studio space
             </h2>
             <p className="mt-8 font-body text-[1.1rem] leading-relaxed max-w-sm text-[var(--color-on-surface)] opacity-80">
-              We partner with visionary brands, agencies, and global networks to produce uncompromising cinematic narratives.
+              Book our Freetown studio or talk with our team about filming a commercial, documentary, interview, or live event in Sierra Leone.
             </p>
           </div>
           <div className="mt-12 md:mt-0 flex flex-col md:justify-end md:items-end">
@@ -39,7 +39,7 @@ export function Services() {
                 [ Studio Access ]
               </span>
               <p className="font-body text-[1rem] leading-relaxed text-[var(--color-on-surface)] opacity-80 mb-6">
-                Join our roster of premium partners. Secure your production dates or schedule an initial consultation.
+                Tell us what you’re making and when you plan to shoot. We’ll discuss studio availability and production support.
               </p>
               <button 
                 id="booking-trigger-btn"

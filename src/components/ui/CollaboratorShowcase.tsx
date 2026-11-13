@@ -1,7 +1,8 @@
 'use client';
 
-import type React from 'react';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { motion, useSpring } from 'framer-motion';
+import Image from 'next/image';
+import { useState, type PointerEvent } from 'react';
 import { createPortal } from 'react-dom';
 
 interface Collaborator {
@@ -13,113 +14,26 @@ interface CollaboratorShowcaseProps {
   collaborators: Collaborator[];
 }
 
-/**
- * Floating logo that follows the cursor.
- * Rendered via portal to document.body so GSAP transforms don't interfere.
- */
-function FloatingLogo({
-  collaborators,
-  hoveredIndex,
-  smoothPos,
-  isVisible,
-}: {
-  collaborators: Collaborator[];
-  hoveredIndex: number | null;
-  smoothPos: { x: number; y: number };
-  isVisible: boolean;
-}) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
-  return createPortal(
-    <div
-      className="pointer-events-none overflow-hidden rounded-sm shadow-xl"
-      style={{
-        position: 'fixed',
-        left: 0,
-        top: 0,
-        zIndex: 99999,
-        transform: `translate3d(${smoothPos.x + 24}px, ${smoothPos.y - 80}px, 0)`,
-        opacity: isVisible ? 1 : 0,
-        scale: isVisible ? '1' : '0.85',
-        transition:
-          'opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), scale 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-        willChange: 'transform',
-      }}
-    >
-      <div
-        className="relative overflow-hidden"
-        style={{
-          width: 200,
-          height: 140,
-          backgroundColor: 'var(--color-surface-container-lowest)',
-          border: '1px solid rgba(26, 26, 24, 0.1)',
-        }}
-      >
-        {collaborators.map((collab, index) => (
-          <img
-            key={collab.name}
-            src={collab.logo}
-            alt={collab.name}
-            className="absolute inset-0 w-full h-full object-contain"
-            style={{
-              padding: 24,
-              opacity: hoveredIndex === index ? 1 : 0,
-              transform: hoveredIndex === index ? 'scale(1)' : 'scale(1.15)',
-              filter: hoveredIndex === index ? 'none' : 'blur(10px)',
-              transition: 'opacity 0.5s ease-out, transform 0.5s ease-out, filter 0.5s ease-out',
-            }}
-          />
-        ))}
-      </div>
-    </div>,
-    document.body
-  );
-}
-
 export function CollaboratorShowcase({ collaborators }: CollaboratorShowcaseProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [smoothPos, setSmoothPos] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(false);
-  const targetRef = useRef({ x: 0, y: 0 });
-  const animationRef = useRef<number | null>(null);
+  const x = useSpring(0, { stiffness: 150, damping: 25 });
+  const y = useSpring(0, { stiffness: 150, damping: 25 });
+  const activeCollaborator = hoveredIndex === null ? null : collaborators[hoveredIndex];
 
-  // Smooth animation loop
-  useEffect(() => {
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+  function handlePointerEnter(event: PointerEvent, index: number) {
+    if (event.pointerType !== 'mouse') return;
 
-    const animate = () => {
-      setSmoothPos((prev) => ({
-        x: lerp(prev.x, targetRef.current.x, 0.12),
-        y: lerp(prev.y, targetRef.current.y, 0.12),
-      }));
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    animationRef.current = requestAnimationFrame(animate);
-    return () => {
-      if (animationRef.current) cancelAnimationFrame(animationRef.current);
-    };
-  }, []);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    targetRef.current = { x: e.clientX, y: e.clientY };
-  }, []);
-
-  const handleMouseEnter = useCallback((index: number) => {
+    x.jump(event.clientX + 24);
+    y.jump(event.clientY - 80);
     setHoveredIndex(index);
-    setIsVisible(true);
-  }, []);
+  }
 
-  const handleMouseLeave = useCallback(() => {
-    setHoveredIndex(null);
-    setIsVisible(false);
-  }, []);
+  function handlePointerMove(event: PointerEvent) {
+    if (hoveredIndex === null || event.pointerType !== 'mouse') return;
+
+    x.set(event.clientX + 24);
+    y.set(event.clientY - 80);
+  }
 
   // Split into two columns
   const midpoint = Math.ceil(collaborators.length / 2);
@@ -131,8 +45,8 @@ export function CollaboratorShowcase({ collaborators }: CollaboratorShowcaseProp
       key={collab.name}
       role="listitem"
       className="group cursor-default"
-      onMouseEnter={() => handleMouseEnter(globalIndex)}
-      onMouseLeave={handleMouseLeave}
+      onPointerEnter={(event) => handlePointerEnter(event, globalIndex)}
+      onPointerLeave={() => setHoveredIndex(null)}
     >
       <div className="relative py-5 md:py-6 transition-all duration-300 ease-out">
         {/* Hover highlight */}
@@ -179,17 +93,30 @@ export function CollaboratorShowcase({ collaborators }: CollaboratorShowcaseProp
 
   return (
     <>
-      {/* Portal-rendered floating logo — lives outside GSAP transforms */}
-      <FloatingLogo
-        collaborators={collaborators}
-        hoveredIndex={hoveredIndex}
-        smoothPos={smoothPos}
-        isVisible={isVisible}
-      />
+      {activeCollaborator && createPortal(
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none fixed top-0 left-0 z-[99999] overflow-hidden rounded-sm shadow-xl"
+          style={{ x, y }}
+        >
+          <div className="relative h-[140px] w-[200px] border border-black/10 bg-[var(--color-surface-container-lowest)]">
+            <div className="absolute inset-6">
+              <Image
+                src={activeCollaborator.logo}
+                alt=""
+                fill
+                sizes="152px"
+                loading="eager"
+                className="object-contain"
+              />
+            </div>
+          </div>
+        </motion.div>,
+        document.body
+      )}
 
-      {/* Main content */}
       <div
-        onMouseMove={handleMouseMove}
+        onPointerMove={handlePointerMove}
         className="relative w-full h-full flex flex-col justify-center px-8 md:px-20"
       >
         {/* Section Label */}

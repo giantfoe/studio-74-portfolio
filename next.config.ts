@@ -1,7 +1,22 @@
 import type { NextConfig } from "next";
+import { SITE_URL, SOCIAL_IMAGE } from "./src/data/site";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'studio-74-portfolio.vercel.app' }],
+        destination: `${SITE_URL}/:path*`,
+        permanent: true,
+      },
+      {
+        source: '/opengraph-image.png',
+        destination: SOCIAL_IMAGE,
+        permanent: true,
+      },
+    ];
+  },
 
   // Image optimization for external sources
   images: {

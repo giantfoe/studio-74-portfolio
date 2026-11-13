@@ -1,3 +1,5 @@
+import { SITE_URL } from './site';
+
 export interface JournalArticle {
   slug: string;
   volume: string;
@@ -14,8 +16,6 @@ export interface ArticleSection {
   content: string;
   items?: string[]; // for list type
 }
-
-export const SITE_URL = 'https://studio74.one';
 
 export const journalArticles: JournalArticle[] = [
   {

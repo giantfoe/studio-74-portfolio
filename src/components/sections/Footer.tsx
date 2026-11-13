@@ -1,10 +1,10 @@
 'use client';
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { STUDIO_EMAIL } from '@/data/site';
 
 export function Footer() {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -12,7 +12,7 @@ export function Footer() {
     setStatus('loading');
 
     try {
-      await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -22,12 +22,13 @@ export function Footer() {
           email: email
         })
       });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error('Subscription failed');
       setStatus('success');
       setEmail('');
       setTimeout(() => setStatus('idle'), 3000);
     } catch {
-      setStatus('success');
-      setTimeout(() => setStatus('idle'), 3000);
+      setStatus('error');
     }
   };
 
@@ -63,20 +64,21 @@ export function Footer() {
             placeholder="Subscribe to our Curated Letter" 
             aria-label="Subscribe to our Curated Letter"
             className="w-full sm:w-[350px] bg-transparent border-b border-white/30 text-white px-4 py-4 font-label uppercase tracking-[0.1em] text-[10px] md:text-[12px] focus:outline-none focus:border-[var(--color-primary)] focus-visible:outline-none focus-visible:border-[var(--color-primary)] transition-colors placeholder:text-white/40 text-center sm:text-left disabled:opacity-50"
-            disabled={status !== 'idle'}
+            disabled={status === 'loading' || status === 'success'}
             required
           />
           <button 
             type="submit"
-            disabled={status !== 'idle'}
+            disabled={status === 'loading' || status === 'success'}
             className="w-full sm:w-auto font-label tracking-[0.1em] uppercase text-[12px] bg-white text-black hover:bg-[var(--color-primary)] hover:text-white px-8 py-4 transition-colors duration-500 font-bold disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white rounded-sm"
           >
             {status === 'loading' ? 'Joining...' : status === 'success' ? 'Joined.' : 'Join'}
           </button>
         </form>
+        {status === 'error' && <p role="alert" className="mb-6">We couldn’t add you to the list. Please try again.</p>}
         
         <a 
-          href="mailto:slstudio74sl@gmail.com"
+          href={`mailto:${STUDIO_EMAIL}`}
           aria-label="Start a project by emailing Studio 74"
           className="group relative px-12 py-6 bg-white text-black hover:bg-[var(--color-primary)] hover:text-white transition-colors duration-500 overflow-hidden flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
         >

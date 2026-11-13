@@ -63,3 +63,40 @@ body {
 ::-webkit-scrollbar {
   display: none;
 }
+
+.studio-grain {
+  background: url('/studio74-grain.jpg') repeat;
+}
+
+.studio-hero-grid {
+  background-image:
+    linear-gradient(to right, #1a1a1810 1px, transparent 1px),
+    linear-gradient(to bottom, #1a1a1810 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  mask-image: radial-gradient(ellipse at center, black, transparent 75%);
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+  .studio-hero-content {
+    animation: studio-hero-rise 480ms ease-out;
+  }
+}
+
+@keyframes studio-hero-rise {
+  from { transform: translateY(0.6rem); }
+  to { transform: translateY(0); }
+}
+
+@media (min-width: 768px) {
+  .studio-home[data-horizontal] {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .studio-home[data-horizontal] .studio-scroll {
+    flex-direction: row;
+    width: max-content;
+    height: 100%;
+    will-change: transform;
+  }
+}

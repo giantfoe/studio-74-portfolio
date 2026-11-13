@@ -1,6 +1,3 @@
-'use client';
-
-import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { journalArticles } from '@/data/journal';
 
@@ -24,14 +21,8 @@ export function NewsletterArchive() {
 
         {/* Letters Grid Map */}
         <div className="flex flex-col md:flex-row gap-6 w-full md:w-max">
-          {journalArticles.map((article, i) => (
-            <motion.div 
-              key={article.slug}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, delay: i * 0.1 }}
-            >
+          {journalArticles.map((article) => (
+            <div key={article.slug}>
               <Link
                 href={`/journal/${article.slug}`}
                 className="group block w-full md:w-[350px] shrink-0 bg-[var(--color-surface-container-low)] border border-transparent hover:border-[var(--color-primary)] transition-all duration-500 overflow-hidden relative skew-elem origin-bottom px-8 py-10 flex flex-col justify-between min-h-[350px] md:min-h-[450px] text-left cursor-pointer"
@@ -57,7 +48,7 @@ export function NewsletterArchive() {
                   </span>
                 </div>
               </Link>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

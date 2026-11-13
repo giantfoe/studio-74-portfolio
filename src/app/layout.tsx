@@ -3,10 +3,10 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { CustomCursor } from '@/components/ui/CustomCursor';
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay';
-import { Preloader } from '@/components/ui/Preloader';
 import { ViewportGrid } from '@/components/ui/ViewportGrid';
 
 import { Playfair_Display } from 'next/font/google';
+import { SITE_URL, SITE_NAME, SITE_TITLE, SITE_DESCRIPTION, SOCIAL_IMAGE, STUDIO_EMAIL } from '@/data/site';
 
 const aeonik = localFont({
   src: [
@@ -31,30 +31,13 @@ const playfair = Playfair_Display({
   style: ['normal', 'italic'],
 });
 
-const SITE_URL = 'https://studio74.one';
-const SITE_NAME = 'Studio 74';
-const SITE_DESCRIPTION =
-  'Studio 74 is a cinematic production house based in Freetown, Sierra Leone — specializing in TV commercials, wedding films, documentaries, and brand storytelling for clients including BBC, Al Jazeera, UNICEF, and the World Bank.';
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Studio 74 — Cinematic Production House | Freetown, Sierra Leone',
+    default: SITE_TITLE,
     template: '%s | Studio 74',
   },
   description: SITE_DESCRIPTION,
-  keywords: [
-    'Studio 74',
-    'video production Sierra Leone',
-    'cinematography Freetown',
-    'wedding films Sierra Leone',
-    'TV commercial production',
-    'documentary filmmaking',
-    'brand storytelling Africa',
-    'cinematic production house',
-    'corporate video production',
-    'music video production',
-  ],
   authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
   publisher: SITE_NAME,
@@ -72,29 +55,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: SITE_URL,
+    url: '/',
     siteName: SITE_NAME,
-    title: 'Studio 74 — Cinematic Production House | Freetown',
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     images: [
       {
-        url: '/opengraph-image.png',
+        url: SOCIAL_IMAGE,
         width: 1200,
         height: 630,
-        alt: 'Studio 74 — Cinematic Production House',
-        type: 'image/png',
+        alt: 'Studio 74 logo and Freetown, Sierra Leone',
+        type: 'image/jpeg',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Studio 74 — Cinematic Production House',
+    title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: ['/opengraph-image.png'],
-    creator: '@studio74film',
-  },
-  alternates: {
-    canonical: SITE_URL,
+    images: [SOCIAL_IMAGE],
   },
   category: 'entertainment',
   verification: {
@@ -110,18 +89,20 @@ const jsonLd = {
       '@type': 'Organization',
       '@id': `${SITE_URL}/#organization`,
       name: SITE_NAME,
-      url: SITE_URL,
+      alternateName: 'Studio74',
+      url: `${SITE_URL}/`,
       logo: {
         '@type': 'ImageObject',
-        url: `${SITE_URL}/logo.png`,
-        width: 512,
-        height: 512,
+        url: `${SITE_URL}/studio74-logo.webp`,
+        width: 192,
+        height: 192,
       },
       description: SITE_DESCRIPTION,
-      foundingDate: '2026',
-      foundingLocation: {
-        '@type': 'Place',
-        name: 'Freetown, Sierra Leone',
+      legalName: 'Studio 74(SL) Limited',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Freetown',
+        addressCountry: 'SL',
       },
       sameAs: [
         'https://www.instagram.com/studio74film',
@@ -130,7 +111,7 @@ const jsonLd = {
       ],
       contactPoint: {
         '@type': 'ContactPoint',
-        email: 'slstudio74sl@gmail.com',
+        email: STUDIO_EMAIL,
         contactType: 'customer service',
         availableLanguage: ['English'],
       },
@@ -138,19 +119,9 @@ const jsonLd = {
     {
       '@type': 'WebSite',
       '@id': `${SITE_URL}/#website`,
-      url: SITE_URL,
+      url: `${SITE_URL}/`,
       name: SITE_NAME,
       publisher: { '@id': `${SITE_URL}/#organization` },
-      description: SITE_DESCRIPTION,
-      inLanguage: 'en',
-    },
-    {
-      '@type': 'WebPage',
-      '@id': `${SITE_URL}/#webpage`,
-      url: SITE_URL,
-      name: 'Studio 74 — Cinematic Production House | Freetown, Sierra Leone',
-      isPartOf: { '@id': `${SITE_URL}/#website` },
-      about: { '@id': `${SITE_URL}/#organization` },
       description: SITE_DESCRIPTION,
       inLanguage: 'en',
     },
@@ -174,7 +145,6 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
 
-        <Preloader />
         <ViewportGrid />
         <NoiseOverlay />
         <CustomCursor />

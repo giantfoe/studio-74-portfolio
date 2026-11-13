@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { STUDIO_EMAIL } from '@/data/site';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -24,11 +25,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [submitError, setSubmitError] = useState(false);
 
   // Focus trap and keyboard handlers
   useEffect(() => {
@@ -102,6 +99,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError(false);
 
     try {
       // Create a seamless background payload for Web3Forms
@@ -127,24 +125,16 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
 
       const result = await response.json();
 
-      if (result.success) {
-        setSubmitted(true);
-      } else {
-        console.error('Submission failed', result);
-        // We still show submitted to not break the premium UX, 
-        // but log the error for devs.
-        setSubmitted(true);
-      }
-
-    } catch (err) {
-      console.error('Network Error', err);
-      setSubmitted(true); 
+      if (!response.ok || !result.success) throw new Error('Booking request failed');
+      setSubmitted(true);
+    } catch {
+      setSubmitError(true);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (!isOpen || !mounted) return null;
+  if (!isOpen) return null;
 
   const questions = [
     {
@@ -183,7 +173,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
       placeholder: "Lighting setup needs, audio requirements, etc...",
       type: "textarea"
     }
-  ];
+  ] as const;
 
   const currentQ = questions[step];
 
@@ -232,7 +222,7 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                     className="w-full bg-transparent border-b-2 border-white/20 focus:border-white outline-none text-2xl pb-4 font-body transition-colors"
                     placeholder={currentQ.placeholder}
                     rows={4}
-                    value={(formData as any)[currentQ.id]}
+                    value={formData[currentQ.id]}
                     onChange={(e) => setFormData({...formData, [currentQ.id]: e.target.value})}
                   />
                 ) : (
@@ -244,9 +234,16 @@ export function BookingModal({ isOpen, onClose }: BookingModalProps) {
                     type={currentQ.type}
                     className={`w-full bg-transparent border-b-2 border-white/20 focus:border-white outline-none text-3xl md:text-5xl pb-4 font-body transition-colors placeholder:text-white/20 ${currentQ.type === 'date' ? '[color-scheme:dark] uppercase text-white/90' : ''}`}
                     placeholder={currentQ.placeholder}
-                    value={(formData as any)[currentQ.id]}
+                    value={formData[currentQ.id]}
                     onChange={(e) => setFormData({...formData, [currentQ.id]: e.target.value})}
                   />
+                )}
+
+                {submitError && (
+                  <p role="alert" className="mt-6 text-white">
+                    We couldn’t send your booking request. Try again or email{' '}
+                    <a className="underline" href={`mailto:${STUDIO_EMAIL}`}>Studio 74</a>.
+                  </p>
                 )}
 
                 <div className="mt-16 flex items-center gap-6">

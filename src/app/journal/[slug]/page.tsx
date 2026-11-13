@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { journalArticles, getArticleBySlug, SITE_URL } from '@/data/journal';
+import { journalArticles, getArticleBySlug } from '@/data/journal';
+import { SITE_URL, SITE_NAME, SOCIAL_IMAGE } from '@/data/site';
 import { JournalPage } from './JournalPage';
 
 interface PageProps {
@@ -32,12 +33,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `${article.title} — Frames & Truth`,
       description: article.excerpt,
       url: articleUrl,
-      siteName: 'Studio 74',
+      siteName: SITE_NAME,
       publishedTime: article.date,
       authors: [article.author],
       images: [
         {
-          url: '/opengraph-image.png',
+          url: SOCIAL_IMAGE,
           width: 1200,
           height: 630,
           alt: `${article.title} — Frames & Truth by Studio 74`,
@@ -48,8 +49,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: 'summary_large_image',
       title: `${article.title} — Frames & Truth`,
       description: article.excerpt,
-      images: ['/opengraph-image.png'],
-      creator: '@studio74film',
+      images: [SOCIAL_IMAGE],
     },
     alternates: {
       canonical: articleUrl,
@@ -77,11 +77,11 @@ export default async function Page({ params }: PageProps) {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Studio 74',
+      name: SITE_NAME,
       url: SITE_URL,
       logo: {
         '@type': 'ImageObject',
-        url: `${SITE_URL}/logo.png`,
+        url: `${SITE_URL}/studio74-logo.webp`,
       },
     },
     datePublished: article.date,
@@ -89,7 +89,7 @@ export default async function Page({ params }: PageProps) {
       '@type': 'WebPage',
       '@id': `${SITE_URL}/journal/${article.slug}`,
     },
-    image: `${SITE_URL}/opengraph-image.png`,
+    image: `${SITE_URL}${SOCIAL_IMAGE}`,
   };
 
   return (

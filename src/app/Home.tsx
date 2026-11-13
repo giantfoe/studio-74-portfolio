@@ -80,6 +80,7 @@ export default function Home() {
       lenisRef.current = lenis;
 
       container.setAttribute('data-horizontal', '');
+      let timelineTrigger: InstanceType<typeof ScrollTrigger> | undefined;
       const context = gsap.context(() => {
         const getScrollWidth = () => Math.max(scrollWrapper.scrollWidth - window.innerWidth, 0);
         const timeline = gsap.timeline({
@@ -101,6 +102,7 @@ export default function Home() {
             },
           },
         });
+        timelineTrigger = timeline.scrollTrigger;
         timeline.to(scrollWrapper, { x: () => -getScrollWidth(), ease: 'none' }, 0);
         timeline.to('.parallax-bg', { x: () => -getScrollWidth() * 0.6, ease: 'none' }, 0);
         timeline.to('.portfolio-img', { xPercent: 15, ease: 'none' }, 0);
@@ -116,6 +118,21 @@ export default function Home() {
         container.removeAttribute('data-horizontal');
       };
       ScrollTrigger.refresh();
+
+      // Anchor targets are vertical until the horizontal layout is enhanced.
+      const scrollToWork = () => {
+        if (window.location.hash !== '#work' || !timelineTrigger) return;
+        const work = document.getElementById('work');
+        if (work) lenis.scrollTo(timelineTrigger.start + work.offsetLeft, { immediate: true });
+      };
+
+      scrollToWork();
+      window.addEventListener('hashchange', scrollToWork);
+      const restore = cleanup;
+      cleanup = () => {
+        window.removeEventListener('hashchange', scrollToWork);
+        restore();
+      };
     }
 
     const update = () => { void syncScroll().catch(console.error); };

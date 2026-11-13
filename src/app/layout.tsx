@@ -104,11 +104,6 @@ const jsonLd = {
         addressLocality: 'Freetown',
         addressCountry: 'SL',
       },
-      sameAs: [
-        'https://www.instagram.com/studio74film',
-        'https://www.youtube.com/@studio74film',
-        'https://vimeo.com/studio74',
-      ],
       contactPoint: {
         '@type': 'ContactPoint',
         email: STUDIO_EMAIL,
